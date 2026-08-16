@@ -782,9 +782,6 @@
         <div class="container">
             <h2>🔥 Paket Internet &amp; TopUp Game</h2>
             <p>Transaksi via WhatsApp. Update harga realtime.</p>
-            <a href="https://wa.me/6283844843020?text=Halo%20PasirPogorCell%2C%20saya%20mau%20beli%20paket%20internet%20atau%20topup%20game." target="_blank" class="wa-hero">
-                <i class="fab fa-whatsapp"></i> Chat WhatsApp
-            </a>
         </div>
     </section>
 
@@ -863,34 +860,81 @@
             <div class="modal-icon" style="background: var(--gradient-gold);"><i class="fas fa-store-alt"></i></div>
             <h3>Informasi Toko</h3>
             <p class="modal-sub" style="margin-bottom: 16px;">Detail lengkap PasirPogorCell</p>
-            <div class="settings-grid" id="settingsGrid">
-                <div class="settings-item full">
-                    <i class="fas fa-store"></i>
-                    <div><div class="label">Nama Toko</div><div class="value">PasirPogorCell</div></div>
-                </div>
-                <div class="settings-item full">
-                    <i class="fas fa-map-pin"></i>
-                    <div><div class="label">Alamat</div><div class="value">Pasir pogor, RT.2/RW.1, Ciparasi, Kec. Sobang, Kabupaten Lebak, Banten 42280</div></div>
-                </div>
-                <div class="settings-item">
-                    <i class="fas fa-envelope"></i>
-                    <div><div class="label">Email</div><div class="value">pasirpogorcell@gmail.com</div></div>
-                </div>
-                <div class="settings-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <div><div class="label">WhatsApp</div><div class="value">+62 838-4484-3020</div></div>
-                </div>
-                <div class="settings-item">
-                    <i class="fas fa-clock"></i>
-                    <div><div class="label">Jam Buka</div><div class="value">06:30 - 21:30 WIB</div></div>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-close-modal" id="settingsCloseBtn">Tutup</button>
-                <a href="https://wa.me/6283844843020?text=Halo%20PasirPogorCell%2C%20saya%20mau%20tanya%20info%20toko." target="_blank" class="btn-wa-modal" style="background:#25d366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,0.3);">
-                    <i class="fab fa-whatsapp"></i> Hubungi via WA
+<div class="settings-grid" id="settingsGrid">
+    <!-- Nama Toko -->
+    <div class="settings-item full" style="background: var(--gradient-primary); border: none; border-radius: var(--radius); padding: 18px 20px;">
+        <i class="fas fa-store" style="color: #fff; font-size: 24px;"></i>
+        <div>
+            <div class="label" style="color: rgba(255,255,255,0.7);">Nama Toko</div>
+            <div class="value" style="color: #fff; font-size: 20px; font-weight: 700;">PasirPogorCell</div>
+        </div>
+    </div>
+
+    <!-- Alamat -->
+    <div class="settings-item full" style="align-items: center;">
+        <i class="fas fa-map-pin" style="font-size: 20px; min-width: 28px; color: var(--text-secondary);"></i>
+        <div style="flex: 1;">
+            <div class="label">Alamat</div>
+            <div class="value" style="font-size: 14px; line-height: 1.6;">
+                <a href="https://www.google.com/maps/search/?api=1&query=Pasir+pogor+RT.2%2FRW.1+Ciparasi+Kec.+Sobang+Kabupaten+Lebak+Banten+42280" 
+                   target="_blank" 
+                   style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color); transition: all 0.3s;"
+                   onmouseover="this.style.borderBottomColor='#25d366'; this.style.color='#25d366';"
+                   onmouseout="this.style.borderBottomColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                   Pasir pogor, RT.2/RW.1, Ciparasi, Kec. Sobang, Kabupaten Lebak, Banten 42280
+                   <i class="fas fa-external-link-alt" style="font-size: 11px; margin-left: 6px; opacity: 0.5;"></i>
                 </a>
             </div>
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="settings-item" style="align-items: center;">
+        <i class="fas fa-envelope" style="font-size: 18px; min-width: 28px; color: var(--text-secondary);"></i>
+        <div style="flex: 1;">
+            <div class="label">Email</div>
+            <div class="value" style="font-size: 14px;">
+                <a href="mailto:pasirpogorcell@gmail.com" 
+                   style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color); transition: all 0.3s;"
+                   onmouseover="this.style.borderBottomColor='#25d366'; this.style.color='#25d366';"
+                   onmouseout="this.style.borderBottomColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                   pasirpogorcell@gmail.com
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="settings-item" style="align-items: center;">
+        <i class="fab fa-whatsapp" style="font-size: 20px; color: #25d366; min-width: 28px;"></i>
+        <div style="flex: 1;">
+            <div class="label">WhatsApp</div>
+            <div class="value" style="font-size: 14px;">
+                <a href="https://wa.me/6283844843020" target="_blank" 
+                   style="color: #25d366; text-decoration: none; font-weight: 500; transition: all 0.3s;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   +62 838-4484-3020
+                   <i class="fas fa-external-link-alt" style="font-size: 11px; margin-left: 6px; opacity: 0.5;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jam Buka -->
+    <div class="settings-item full" style="align-items: center; background: var(--bg-card); border: 2px solid var(--border-color);">
+        <i class="fas fa-clock" style="font-size: 20px; min-width: 28px; color: var(--text-secondary);"></i>
+        <div style="flex: 1;">
+            <div class="label">Jam Buka</div>
+            <div class="value" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                06:30 - 21:30 WIB
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-actions">
+    <button class="btn-close-modal" id="settingsCloseBtn">Tutup</button>
+</div>
         </div>
     </div>
 
