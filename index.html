@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PasirPogorCell - Paket Internet & TopUp Game</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== RESET & VARIABLES ===== */
+        /* ============================================================
+           RESET & VARIABLES
+           ============================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -47,6 +49,10 @@
             --gold-dark: #F57F17;
             --skeleton-base: #e0e7e5;
             --skeleton-highlight: #f0f7f4;
+            --voucher-color: #F9A825;
+            --voucher-dark: #F57F17;
+            --reward-color: #FF6F00;
+            --reward-bg: rgba(255, 111, 0, 0.08);
         }
 
         [data-theme="dark"] {
@@ -82,6 +88,10 @@
             --gold-dark: #F9A825;
             --skeleton-base: #2a4d3e;
             --skeleton-highlight: #1a332b;
+            --voucher-color: #FDD835;
+            --voucher-dark: #F9A825;
+            --reward-color: #FFB300;
+            --reward-bg: rgba(255, 179, 0, 0.12);
         }
 
         html { scroll-behavior: smooth; }
@@ -100,29 +110,21 @@
         ::-webkit-scrollbar-thumb { background: var(--primary-dark); border-radius: 10px; }
 
         #progressBar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-            z-index: 9999;
-            width: 0%;
-            transition: width 0.1s ease-out;
-            box-shadow: 0 0 10px rgba(0, 105, 92, 0.3);
+            position: fixed; top: 0; left: 0; height: 4px;
+            background: var(--gradient-primary); z-index: 9999; width: 0%;
+            transition: width 0.1s ease-out; box-shadow: 0 0 10px rgba(0, 105, 92, 0.3);
         }
 
         .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
         .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: var(--glass-bg);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 16px 0;
-            transition: background 0.4s ease, border-color 0.4s ease;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: var(--glass-bg); border-bottom: 1px solid var(--glass-border);
+            padding: 16px 0; transition: background 0.4s ease, border-color 0.4s ease;
         }
         .navbar .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
         .navbar-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
@@ -133,9 +135,7 @@
         }
         .navbar-brand h1 {
             font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .navbar-actions { display: flex; align-items: center; gap: 8px; }
@@ -148,39 +148,29 @@
         .navbar-actions button:hover { transform: scale(1.05); box-shadow: var(--shadow-md); }
         .navbar-actions button:active { transform: scale(0.95); }
 
+        /* ============================================================
+           HERO
+           ============================================================ */
         .hero {
-            padding: 40px 0 32px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-primary);
+            padding: 40px 0 32px; text-align: center; position: relative;
+            overflow: hidden; background: var(--bg-primary);
         }
         .hero::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
+            content: ''; position: absolute; top: -50%; left: -50%;
             width: 200%; height: 200%;
             background: radial-gradient(circle at 30% 50%, rgba(0, 105, 92, 0.06) 0%, transparent 60%);
             pointer-events: none;
         }
         .hero h2 {
             font-size: 40px; font-weight: 800; letter-spacing: -1px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-            position: relative;
+            background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 8px; position: relative;
             text-shadow: 0 2px 8px rgba(0, 80, 60, 0.15);
         }
         [data-theme="dark"] .hero h2 { text-shadow: 0 2px 12px rgba(38, 166, 154, 0.30); }
         .hero p {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 560px;
-            margin: 0 auto;
-            position: relative;
-            font-weight: 500;
+            font-size: 18px; color: var(--text-secondary); max-width: 560px;
+            margin: 0 auto; position: relative; font-weight: 500;
         }
         [data-theme="dark"] .hero p { color: #b2dfdb; }
         .hero .wa-hero {
@@ -192,6 +182,9 @@
         .hero .wa-hero:hover { transform: scale(1.04); box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5); }
         .hero .wa-hero i { margin-right: 10px; }
 
+        /* ============================================================
+           TABS
+           ============================================================ */
         .tabs {
             display: flex; gap: 8px; justify-content: center; margin: 28px 0 20px; flex-wrap: wrap;
         }
@@ -209,6 +202,336 @@
         }
         .tab-btn.active i { color: #fff; }
 
+        /* ============================================================
+           REWARD MENU BUTTON (khusus 🎁)
+           ============================================================ */
+        .reward-menu-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, #FF6F00, #E65100);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 111, 0, 0.35);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .reward-menu-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 30px rgba(255, 111, 0, 0.5);
+        }
+
+        .reward-menu-btn:active {
+            transform: scale(0.96);
+        }
+
+        .reward-menu-btn .gift-icon {
+            font-size: 24px;
+            animation: giftPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(-6deg); }
+        }
+
+        .reward-menu-btn .badge-reward {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #EF5350;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(239, 83, 80, 0.4);
+            animation: badgePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .reward-menu-btn.active {
+            background: linear-gradient(135deg, #E65100, #BF360C);
+            box-shadow: 0 6px 28px rgba(255, 111, 0, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* ============================================================
+           REWARD SCREEN
+           ============================================================ */
+        .reward-screen {
+            display: none;
+            padding: 20px 0;
+            animation: fadeSlideIn 0.5s ease;
+        }
+
+        .reward-screen.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reward-hero {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            margin-bottom: 24px;
+            border: 2px dashed #FFB300;
+        }
+
+        [data-theme="dark"] .reward-hero {
+            background: linear-gradient(135deg, #1A0A00, #2D1A00);
+            border-color: #FF6F00;
+        }
+
+        .reward-hero .big-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 4px;
+            animation: giftFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .reward-hero h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #E65100;
+            margin-bottom: 2px;
+        }
+
+        [data-theme="dark"] .reward-hero h2 {
+            color: #FFB300;
+        }
+
+        .reward-hero p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .reward-form-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .reward-form-wrapper label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .reward-form-wrapper .input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .reward-form-wrapper input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            min-width: 180px;
+        }
+
+        .reward-form-wrapper input:focus {
+            border-color: #FF6F00;
+            box-shadow: 0 0 0 3px rgba(255, 111, 0, 0.15);
+        }
+
+        .reward-form-wrapper .btn-check-reward {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #FF6F00, #E65100);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reward-form-wrapper .btn-check-reward:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 20px rgba(255, 111, 0, 0.35);
+        }
+
+        .reward-form-wrapper .btn-check-reward:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .reward-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            display: none;
+        }
+
+        .reward-result.show {
+            display: block;
+            animation: fadeSlideIn 0.4s ease;
+        }
+
+        .reward-result.success {
+            border-color: #FF6F00;
+            background: var(--reward-bg);
+        }
+
+        .reward-result.fail {
+            border-color: var(--toast-error);
+            background: rgba(239, 83, 80, 0.06);
+        }
+
+        .reward-result .result-icon {
+            font-size: 44px;
+            display: block;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .reward-result .result-title {
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .reward-result .result-title.success { color: #E65100; }
+        .reward-result .result-title.fail { color: var(--toast-error); }
+
+        .reward-result .result-desc {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 4px 0 12px;
+        }
+
+        .reward-item-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            margin: 12px 0;
+            border-left: 4px solid #FF6F00;
+        }
+
+        .reward-item-card .r-icon { font-size: 32px; }
+        .reward-item-card .r-info { flex: 1; }
+        .reward-item-card .r-info .r-name { font-weight: 700; font-size: 16px; }
+        .reward-item-card .r-info .r-desc { font-size: 13px; color: var(--text-muted); }
+
+        .reward-code-box {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #E65100;
+            border: 1px dashed #FF6F00;
+            margin: 8px 0;
+        }
+
+        [data-theme="dark"] .reward-code-box { color: #FFB300; border-color: #FFB300; }
+
+        .reward-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .reward-actions button {
+            flex: 1;
+            padding: 11px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 100px;
+        }
+
+        .reward-actions .btn-proof {
+            border: 2px solid #FF6F00;
+            background: transparent;
+            color: #FF6F00;
+        }
+
+        .reward-actions .btn-proof:hover {
+            background: #FF6F00;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 111, 0, 0.25);
+        }
+
+        .reward-actions .btn-wa {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+        }
+
+        .reward-actions .btn-wa:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+        }
+
+        .reward-actions .btn-proof:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ============================================================
+           SLIDER
+           ============================================================ */
         .slider-container { margin-bottom: 28px; position: relative; }
         .slider-container .slider-label {
             font-size: 14px; font-weight: 600; color: var(--text-secondary);
@@ -252,6 +575,9 @@
         }
         .slider-item.active .slider-name { color: var(--text-primary); }
 
+        /* ============================================================
+           FILTER BAR
+           ============================================================ */
         .filter-bar {
             display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;
             margin-bottom: 28px; background: var(--bg-card); padding: 16px 20px;
@@ -285,11 +611,12 @@
             box-shadow: 0 4px 14px rgba(0, 80, 60, 0.25);
         }
 
+        /* ============================================================
+           PRODUCT GRID
+           ============================================================ */
         .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            padding-bottom: 48px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px; padding-bottom: 48px;
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
         .product-grid.fade { opacity: 0; transform: translateY(20px); }
@@ -399,7 +726,9 @@
         .empty-state i { font-size: 56px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
         .empty-state h3 { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
 
-        /* ===== MODAL OVERLAY (umum) ===== */
+        /* ============================================================
+           MODAL OVERLAY (umum)
+           ============================================================ */
         .modal-overlay {
             position: fixed; inset: 0; z-index: 999;
             background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(8px);
@@ -459,7 +788,9 @@
             box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
         }
 
-        /* ===== SETTINGS GRID ===== */
+        /* ============================================================
+           SETTINGS GRID
+           ============================================================ */
         .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .settings-item {
             display: flex; align-items: flex-start; gap: 12px; padding: 12px;
@@ -475,7 +806,9 @@
         .settings-item .value { font-size: 14px; font-weight: 500; color: var(--text-primary); word-break: break-word; }
         .settings-item.full { grid-column: 1 / -1; }
 
-        /* ===== INPUT MODAL ===== */
+        /* ============================================================
+           INPUT MODAL
+           ============================================================ */
         .input-modal-overlay {
             position: fixed; inset: 0; z-index: 1000;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
@@ -531,10 +864,10 @@
             box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
         }
 
-        /* ===== PAYMENT MODAL ===== */
-        .payment-modal-box {
-            max-width: 480px;
-        }
+        /* ============================================================
+           PAYMENT MODAL
+           ============================================================ */
+        .payment-modal-box { max-width: 480px; }
         .payment-option {
             display: flex; align-items: center; gap: 14px;
             padding: 14px 18px; border: 2px solid var(--border-color);
@@ -558,6 +891,57 @@
         .payment-summary .row { display: flex; justify-content: space-between; padding: 4px 0; }
         .payment-summary .total { font-weight: 700; font-size: 16px; color: var(--primary-dark); }
         [data-theme="dark"] .payment-summary .total { color: var(--primary-light); }
+
+        .payment-summary .price-original {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+        .payment-summary .price-final {
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--voucher-color);
+            text-shadow: 0 0 20px rgba(249, 168, 37, 0.15);
+        }
+        [data-theme="dark"] .payment-summary .price-final {
+            color: var(--voucher-color);
+            text-shadow: 0 0 20px rgba(253, 216, 53, 0.2);
+        }
+        .payment-summary .voucher-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--gradient-gold);
+            color: #1a202c;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(249, 168, 37, 0.3);
+        }
+        [data-theme="dark"] .payment-summary .voucher-badge {
+            color: #1a202c;
+        }
+        .payment-summary .voucher-row {
+            background: rgba(249, 168, 37, 0.08);
+            border-radius: 6px;
+            padding: 6px 10px;
+            margin: 4px 0;
+            border-left: 3px solid var(--voucher-color);
+        }
+        [data-theme="dark"] .payment-summary .voucher-row {
+            background: rgba(253, 216, 53, 0.12);
+        }
+        .payment-summary .voucher-row .label {
+            color: var(--voucher-color);
+            font-weight: 600;
+        }
+        .payment-summary .voucher-row .amount {
+            font-weight: 700;
+            color: var(--voucher-color);
+        }
 
         .qr-container {
             text-align: center; padding: 16px; background: #fff; border-radius: 12px;
@@ -583,7 +967,9 @@
         .btn-confirm-payment:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45); }
         .btn-confirm-payment:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        /* ===== FULLSCREEN QR ===== */
+        /* ============================================================
+           FULLSCREEN QR
+           ============================================================ */
         .qr-fullscreen-overlay {
             position: fixed; inset: 0; z-index: 9999;
             background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(12px);
@@ -630,7 +1016,9 @@
         }
         .qr-fullscreen-overlay .action-btn.close-qr:hover { background: rgba(255,255,255,0.25); }
 
-        /* ===== CONFIRM MODAL ===== */
+        /* ============================================================
+           CONFIRM MODAL
+           ============================================================ */
         .confirm-modal-box { max-width: 400px; text-align: center; }
         .confirm-modal-box .icon-big { font-size: 56px; margin-bottom: 12px; display: block; }
         .confirm-modal-box .instruction {
@@ -661,7 +1049,9 @@
         }
         .confirm-modal-box .btn-row .btn-batal:hover { border-color: var(--primary-dark); color: var(--text-primary); }
 
-        /* ===== TOAST ===== */
+        /* ============================================================
+           TOAST
+           ============================================================ */
         .toast-container {
             position: fixed; bottom: 100px; right: 28px; z-index: 2000;
             display: flex; flex-direction: column; gap: 12px;
@@ -692,6 +1082,9 @@
             100% { opacity: 0; transform: translateX(40px); }
         }
 
+        /* ============================================================
+           SCROLL TOP
+           ============================================================ */
         .scroll-top {
             position: fixed; bottom: 100px; right: 28px; z-index: 150;
             width: 48px; height: 48px; border-radius: 50%;
@@ -704,6 +1097,9 @@
         .scroll-top:hover { transform: scale(1.08); box-shadow: var(--shadow-lg); }
         .scroll-top:active { transform: scale(0.95); }
 
+        /* ============================================================
+           FOOTER
+           ============================================================ */
         .footer {
             padding: 32px 0 28px; border-top: 1px solid var(--border-color);
             text-align: center; color: var(--text-muted); font-size: 14px;
@@ -714,6 +1110,235 @@
         .footer .wa-footer { color: #25d366; text-decoration: none; font-weight: 600; }
         .footer .wa-footer i { margin-right: 4px; }
 
+        /* ============================================================
+           VOUCHER PROOF
+           ============================================================ */
+        .voucher-proof-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .voucher-proof-overlay.active { display: flex; }
+
+        .voucher-proof-box {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            max-width: 560px;
+            width: 100%;
+            padding: 24px 20px 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            max-height: 95vh;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        .voucher-proof-box .proof-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .voucher-proof-box .proof-header h3 {
+            font-size: 18px; font-weight: 700;
+            color: var(--text-primary);
+        }
+        .voucher-proof-box .proof-header .close-proof {
+            width: 36px; height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .voucher-proof-box .proof-header .close-proof:hover {
+            background: var(--border-color);
+            transform: rotate(90deg);
+        }
+
+        .voucher-proof-box .proof-canvas-wrap {
+            background: #ffffff;
+            border-radius: var(--radius-sm);
+            padding: 6px;
+            margin: 8px 0;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .voucher-proof-box .proof-canvas-wrap canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            image-rendering: high-quality;
+        }
+
+        .voucher-proof-box .proof-actions {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .voucher-proof-box .proof-actions button {
+            flex: 1;
+            padding: 11px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            min-width: 100px;
+        }
+        .voucher-proof-box .proof-actions .btn-download-proof {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(0, 80, 60, 0.3);
+        }
+        .voucher-proof-box .proof-actions .btn-download-proof:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(0, 80, 60, 0.45);
+        }
+        .voucher-proof-box .proof-actions .btn-close-proof {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+        .voucher-proof-box .proof-actions .btn-close-proof:hover {
+            background: var(--border-color);
+        }
+
+        .btn-proof {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 2px solid var(--voucher-color);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--voucher-color);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-proof:hover {
+            background: var(--voucher-color);
+            color: #1a202c;
+            box-shadow: 0 0 20px rgba(249, 168, 37, 0.2);
+        }
+        .btn-proof.visible { display: inline-flex; }
+
+        /* ============================================================
+           REWARD PROOF
+           ============================================================ */
+        .reward-proof-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .reward-proof-overlay.active { display: flex; }
+
+        .reward-proof-box {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            max-width: 560px;
+            width: 100%;
+            padding: 24px 20px 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            max-height: 95vh;
+            overflow-y: auto;
+            text-align: center;
+        }
+        .reward-proof-box .proof-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .reward-proof-box .proof-header h3 {
+            font-size: 18px; font-weight: 700;
+            color: var(--text-primary);
+        }
+        .reward-proof-box .proof-header .close-proof {
+            width: 36px; height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .reward-proof-box .proof-header .close-proof:hover {
+            background: var(--border-color);
+            transform: rotate(90deg);
+        }
+        .reward-proof-box .proof-canvas-wrap {
+            background: #ffffff;
+            border-radius: var(--radius-sm);
+            padding: 6px;
+            margin: 8px 0;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .reward-proof-box .proof-canvas-wrap canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            image-rendering: high-quality;
+        }
+        .reward-proof-box .proof-actions {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .reward-proof-box .proof-actions button {
+            flex: 1;
+            padding: 11px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            min-width: 100px;
+        }
+        .reward-proof-box .proof-actions .btn-download-reward {
+            background: var(--gradient-gold);
+            color: #1a202c;
+            box-shadow: 0 4px 14px rgba(249, 168, 37, 0.3);
+        }
+        .reward-proof-box .proof-actions .btn-download-reward:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px rgba(249, 168, 37, 0.45);
+        }
+        .reward-proof-box .proof-actions .btn-close-proof {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+        .reward-proof-box .proof-actions .btn-close-proof:hover {
+            background: var(--border-color);
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 768px) {
             .navbar-brand h1 { font-size: 18px; }
             .navbar-brand .logo-icon { width: 38px; height: 38px; font-size: 18px; }
@@ -734,6 +1359,16 @@
             .category-label { font-size: 17px; }
             .category-filter .cat-btn { font-size: 12px; padding: 6px 14px; }
             .payment-modal-box { padding: 24px 16px; }
+            .voucher-proof-box, .reward-proof-box { padding: 16px; }
+            .reward-menu-btn { padding: 10px 20px; font-size: 14px; }
+            .reward-menu-btn .gift-icon { font-size: 20px; }
+            .reward-hero .big-icon { font-size: 44px; }
+            .reward-hero h2 { font-size: 22px; }
+            .reward-form-wrapper .input-group { flex-direction: column; }
+            .reward-form-wrapper .btn-check-reward { width: 100%; justify-content: center; }
+            .reward-actions { flex-direction: column; }
+            .reward-actions button { flex: 1 1 auto; }
+            .reward-item-card { flex-direction: column; text-align: center; }
         }
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
@@ -751,6 +1386,11 @@
             .category-label { font-size: 15px; }
             .category-filter .cat-btn { font-size: 11px; padding: 5px 12px; }
             .product-card .action-group { flex-wrap: wrap; }
+            .reward-menu-btn { padding: 8px 16px; font-size: 13px; }
+            .reward-menu-btn .gift-icon { font-size: 18px; }
+            .reward-hero { padding: 20px 16px; }
+            .reward-hero .big-icon { font-size: 36px; }
+            .reward-hero h2 { font-size: 18px; }
         }
     </style>
 </head>
@@ -762,7 +1402,7 @@
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="https://pasirpogorcell-boop.github.io/Daftar-barang/" class="navbar-brand">
+            <a href="#" class="navbar-brand">
                 <div class="logo-icon"><i class="fas fa-bolt"></i></div>
                 <h1>PasirPogorCell</h1>
             </a>
@@ -794,11 +1434,16 @@
             <button class="tab-btn" data-tab="game">
                 <i class="fas fa-gamepad"></i> TopUp Game
             </button>
+<button class="tab-btn reward-menu-btn" data-tab="reward" id="rewardTabBtn">
+    <span class="gift-icon">🎁</span>
+    Klaim Reward
+    <span class="badge-reward">c</span>
+</button>
         </div>
     </div>
 
-    <!-- ===== SLIDER & GRID ===== -->
-    <div class="container">
+    <!-- ===== PRODUCT CONTAINER (Internet & Game) ===== -->
+    <div class="container" id="productContainer">
         <div class="slider-container" id="sliderContainer">
             <span class="slider-label" id="sliderLabel">Pilih Operator:</span>
             <div class="slider-scroll" id="sliderScroll"></div>
@@ -814,6 +1459,45 @@
         </div>
 
         <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- ===== REWARD SCREEN ===== -->
+    <div class="container">
+        <div class="reward-screen" id="rewardScreen">
+            <div class="reward-hero">
+                <span class="big-icon">🎁</span>
+                <h2>Klaim Reward Pelanggan Setia</h2>
+                <p>Masukkan nomor HP atau ID Game untuk mengecek hadiah spesial dari PasirPogorCell</p>
+            </div>
+
+            <div class="reward-form-wrapper">
+                <label for="rewardInput">Masukkan Nomor HP / ID Game</label>
+                <div class="input-group">
+                    <input type="text" id="rewardInput" placeholder="Contoh: 08123456789" />
+                    <button class="btn-check-reward" id="btnCheckReward">
+                        <i class="fas fa-search"></i> Cek Reward
+                    </button>
+                </div>
+            </div>
+
+            <div class="reward-result" id="rewardResult">
+                <span class="result-icon" id="resultIcon">🎉</span>
+                <div class="result-title" id="resultTitle">Selamat!</div>
+                <div class="result-desc" id="resultDesc">Anda mendapatkan hadiah spesial</div>
+                <div id="rewardDetail"></div>
+                <div style="text-align:center; margin:8px 0;">
+                    <span class="reward-code-box" id="rewardCode">REWARD-XXXX</span>
+                </div>
+                <div class="reward-actions">
+                    <button class="btn-proof" id="btnProofReward">
+                        <i class="fas fa-receipt"></i> Lihat Bukti
+                    </button>
+                    <button class="btn-wa" id="btnWaReward">
+                        <i class="fab fa-whatsapp"></i> Konfirmasi ke Penjual
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ===== MODAL DETAIL ===== -->
@@ -860,85 +1544,76 @@
             <div class="modal-icon" style="background: var(--gradient-gold);"><i class="fas fa-store-alt"></i></div>
             <h3>Informasi Toko</h3>
             <p class="modal-sub" style="margin-bottom: 16px;">Detail lengkap PasirPogorCell</p>
-<div class="settings-grid" id="settingsGrid">
-    <!-- Nama Toko -->
-    <div class="settings-item full" style="background: var(--gradient-primary); border: none; border-radius: var(--radius); padding: 18px 20px;">
-        <i class="fas fa-store" style="color: #fff; font-size: 24px;"></i>
-        <div>
-            <div class="label" style="color: rgba(255,255,255,0.7);">Nama Toko</div>
-            <div class="value" style="color: #fff; font-size: 20px; font-weight: 700;">PasirPogorCell</div>
-        </div>
-    </div>
-
-    <!-- Alamat -->
-    <div class="settings-item full" style="align-items: center;">
-        <i class="fas fa-map-pin" style="font-size: 20px; min-width: 28px; color: var(--text-secondary);"></i>
-        <div style="flex: 1;">
-            <div class="label">Alamat</div>
-            <div class="value" style="font-size: 14px; line-height: 1.6;">
-                <a href="https://www.google.com/maps/search/?api=1&query=Pasir+pogor+RT.2%2FRW.1+Ciparasi+Kec.+Sobang+Kabupaten+Lebak+Banten+42280" 
-                   target="_blank" 
-                   style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color); transition: all 0.3s;"
-                   onmouseover="this.style.borderBottomColor='#25d366'; this.style.color='#25d366';"
-                   onmouseout="this.style.borderBottomColor='var(--border-color)'; this.style.color='var(--text-primary)';">
-                   Pasir pogor, RT.2/RW.1, Ciparasi, Kec. Sobang, Kabupaten Lebak, Banten 42280
-                   <i class="fas fa-external-link-alt" style="font-size: 11px; margin-left: 6px; opacity: 0.5;"></i>
-                </a>
+            <div class="settings-grid" id="settingsGrid">
+                <div class="settings-item full" style="background: var(--gradient-primary); border: none; border-radius: var(--radius); padding: 18px 20px;">
+                    <i class="fas fa-store" style="color: #fff; font-size: 24px;"></i>
+                    <div>
+                        <div class="label" style="color: rgba(255,255,255,0.7);">Nama Toko</div>
+                        <div class="value" style="color: #fff; font-size: 20px; font-weight: 700;">PasirPogorCell</div>
+                    </div>
+                </div>
+                <div class="settings-item full" style="align-items: center;">
+                    <i class="fas fa-map-pin" style="font-size: 20px; min-width: 28px; color: var(--text-secondary);"></i>
+                    <div style="flex: 1;">
+                        <div class="label">Alamat</div>
+                        <div class="value" style="font-size: 14px; line-height: 1.6;">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pasir+pogor+RT.2%2FRW.1+Ciparasi+Kec.+Sobang+Kabupaten+Lebak+Banten+42280"
+                               target="_blank"
+                               style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color); transition: all 0.3s;"
+                               onmouseover="this.style.borderBottomColor='#25d366'; this.style.color='#25d366';"
+                               onmouseout="this.style.borderBottomColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                               Pasir pogor, RT.2/RW.1, Ciparasi, Kec. Sobang, Kabupaten Lebak, Banten 42280
+                               <i class="fas fa-external-link-alt" style="font-size: 11px; margin-left: 6px; opacity: 0.5;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-item" style="align-items: center;">
+                    <i class="fas fa-envelope" style="font-size: 18px; min-width: 28px; color: var(--text-secondary);"></i>
+                    <div style="flex: 1;">
+                        <div class="label">Email</div>
+                        <div class="value" style="font-size: 14px;">
+                            <a href="mailto:pasirpogorcell@gmail.com"
+                               style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color); transition: all 0.3s;"
+                               onmouseover="this.style.borderBottomColor='#25d366'; this.style.color='#25d366';"
+                               onmouseout="this.style.borderBottomColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                               pasirpogorcell@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-item" style="align-items: center;">
+                    <i class="fab fa-whatsapp" style="font-size: 20px; color: #25d366; min-width: 28px;"></i>
+                    <div style="flex: 1;">
+                        <div class="label">WhatsApp</div>
+                        <div class="value" style="font-size: 14px;">
+                            <a href="https://wa.me/6283844843020" target="_blank"
+                               style="color: #25d366; text-decoration: none; font-weight: 500; transition: all 0.3s;"
+                               onmouseover="this.style.textDecoration='underline';"
+                               onmouseout="this.style.textDecoration='none';">
+                               +62 838-4484-3020
+                               <i class="fas fa-external-link-alt" style="font-size: 11px; margin-left: 6px; opacity: 0.5;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-item full" style="align-items: center; background: var(--bg-card); border: 2px solid var(--border-color);">
+                    <i class="fas fa-clock" style="font-size: 20px; min-width: 28px; color: var(--text-secondary);"></i>
+                    <div style="flex: 1;">
+                        <div class="label">Jam Buka</div>
+                        <div class="value" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                            06:30 - 21:30 WIB
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-close-modal" id="settingsCloseBtn">Tutup</button>
             </div>
         </div>
     </div>
 
-    <!-- Email -->
-    <div class="settings-item" style="align-items: center;">
-        <i class="fas fa-envelope" style="font-size: 18px; min-width: 28px; color: var(--text-secondary);"></i>
-        <div style="flex: 1;">
-            <div class="label">Email</div>
-            <div class="value" style="font-size: 14px;">
-                <a href="mailto:pasirpogorcell@gmail.com" 
-                   style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color); transition: all 0.3s;"
-                   onmouseover="this.style.borderBottomColor='#25d366'; this.style.color='#25d366';"
-                   onmouseout="this.style.borderBottomColor='var(--border-color)'; this.style.color='var(--text-primary)';">
-                   pasirpogorcell@gmail.com
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- WhatsApp -->
-    <div class="settings-item" style="align-items: center;">
-        <i class="fab fa-whatsapp" style="font-size: 20px; color: #25d366; min-width: 28px;"></i>
-        <div style="flex: 1;">
-            <div class="label">WhatsApp</div>
-            <div class="value" style="font-size: 14px;">
-                <a href="https://wa.me/6283844843020" target="_blank" 
-                   style="color: #25d366; text-decoration: none; font-weight: 500; transition: all 0.3s;"
-                   onmouseover="this.style.textDecoration='underline';"
-                   onmouseout="this.style.textDecoration='none';">
-                   +62 838-4484-3020
-                   <i class="fas fa-external-link-alt" style="font-size: 11px; margin-left: 6px; opacity: 0.5;"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Jam Buka -->
-    <div class="settings-item full" style="align-items: center; background: var(--bg-card); border: 2px solid var(--border-color);">
-        <i class="fas fa-clock" style="font-size: 20px; min-width: 28px; color: var(--text-secondary);"></i>
-        <div style="flex: 1;">
-            <div class="label">Jam Buka</div>
-            <div class="value" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
-                06:30 - 21:30 WIB
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal-actions">
-    <button class="btn-close-modal" id="settingsCloseBtn">Tutup</button>
-</div>
-        </div>
-    </div>
-
-    <!-- ===== MODAL INPUT (dengan validasi) ===== -->
+    <!-- ===== MODAL INPUT ===== -->
     <div class="input-modal-overlay" id="inputModalOverlay">
         <div class="input-modal-box">
             <div class="input-header">
@@ -968,9 +1643,29 @@
 
             <div class="payment-summary" id="paymentSummary">
                 <div class="row"><span>Produk</span><span id="payProductName">-</span></div>
-                <div class="row"><span>Harga</span><span id="payProductPrice" class="total">-</span></div>
-                <div class="row"><span>ID Pelanggan</span><span id="payCustomerId">-</span></div>
+                <div class="row" id="priceRow">
+                    <span>Harga</span>
+                    <span id="payProductPrice" class="total">-</span>
+                </div>
+                <div id="voucherContainer" style="display:none;">
+                    <div class="voucher-row">
+                        <span class="label">🎫 Voucher Pelanggan Setia</span>
+                        <span class="amount" id="payVoucherAmount">-</span>
+                    </div>
+                </div>
+                <div class="row final-row" style="border-top: 2px solid var(--border-color); padding-top: 8px; margin-top: 4px; font-weight: 700;">
+                    <span>Total Bayar</span>
+                    <span id="payFinalPrice" class="total price-final">-</span>
+                </div>
+                <div class="row">
+                    <span id="payIdLabel">Nomor HP</span>
+                    <span id="payCustomerId">-</span>
+                </div>
             </div>
+
+            <button class="btn-proof" id="btnViewProof">
+                <i class="fas fa-receipt"></i> Lihat Bukti Voucher
+            </button>
 
             <div id="paymentOptions">
                 <div class="payment-option" data-method="tunai" onclick="selectPayment('tunai')">
@@ -1005,7 +1700,51 @@
         </div>
     </div>
 
-    <!-- ===== MODAL KONFIRMASI PEMBAYARAN (Non-Tunai) ===== -->
+    <!-- ===== MODAL BUKTI VOUCHER ===== -->
+    <div class="voucher-proof-overlay" id="voucherProofOverlay">
+        <div class="voucher-proof-box">
+            <div class="proof-header">
+                <h3>🧾 Bukti Voucher Pelanggan Setia</h3>
+                <button class="close-proof" id="closeProofBtn">✕</button>
+            </div>
+            <div class="proof-canvas-wrap">
+                <canvas id="proofCanvas" width="1400" height="960"></canvas>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">
+                Kartu ini adalah bukti sah potongan harga dari PasirPogorCell. Simpan dan kirimkan ke penjual.
+            </div>
+            <div class="proof-actions">
+                <button class="btn-download-proof" id="downloadProofBtn">
+                    <i class="fas fa-download"></i> Unduh Gambar (HD)
+                </button>
+                <button class="btn-close-proof" id="closeProofBtn2">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL BUKTI REWARD ===== -->
+    <div class="reward-proof-overlay" id="rewardProofOverlay">
+        <div class="reward-proof-box">
+            <div class="proof-header">
+                <h3>🎁 Bukti Klaim Reward</h3>
+                <button class="close-proof" id="closeRewardProofBtn">✕</button>
+            </div>
+            <div class="proof-canvas-wrap">
+                <canvas id="rewardProofCanvas" width="1400" height="960"></canvas>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">
+                Kartu ini adalah bukti sah klaim reward dari PasirPogorCell. Simpan dan kirimkan ke penjual untuk mengambil hadiah.
+            </div>
+            <div class="proof-actions">
+                <button class="btn-download-reward" id="downloadRewardBtn">
+                    <i class="fas fa-download"></i> Unduh Bukti
+                </button>
+                <button class="btn-close-proof" id="closeRewardProofBtn2">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL KONFIRMASI PEMBAYARAN ===== -->
     <div class="modal-overlay" id="confirmModalOverlay">
         <div class="modal-box confirm-modal-box">
             <span class="icon-big">📱</span>
@@ -1045,7 +1784,7 @@
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
-            &copy; 2024 <span>PasirPogorCell</span> — Terimakasih</i> telah berkunjung.
+            &copy; 2024 <span>PasirPogorCell</span> — Terimakasih telah berkunjung.
             <br />
             <a href="https://wa.me/6283844843020" target="_blank" class="wa-footer">
                 <i class="fab fa-whatsapp"></i> +62 838-4484-3020
@@ -1054,10 +1793,6 @@
     </footer>
 
     <script>
-        // ============================================================
-        // DATA OPERATOR & GAME (sama seperti sebelumnya)
-        // ============================================================
-
 const operators = {    
   Indosat: {    
     "Harian": [    
@@ -1727,11 +2462,9 @@ const games = {
     {nama: "2390 AOV Game", harga: 491000}  
   ]   
 };
-
         // ============================================================
         // IMAGES UNTUK SLIDER
         // ============================================================
-
         const IMAGES = {
             'Indosat': 'https://i.ibb.co.com/tft6S9w/IMG-20260620-072917.jpg',
             'Telkomsel': 'https://i.ibb.co.com/Ngz815fF/images-7e1bfd25-d741-45.jpg',
@@ -1751,12 +2484,485 @@ const games = {
         };
 
         // ============================================================
-        // HELPER FUNCTIONS
+        // DATA VOUCHER
         // ============================================================
+        const voucherList = [
+            { id: '085773641591', type: 'phone', discount: 2000 },
+            { id: '083844843020', type: 'phone', discount: 3000 },
+            { id: '2124070314', type: 'game', discount: 5000 },
+        ];
 
-        function formatPrice(num) {
-            return 'Rp' + num.toLocaleString('id-ID');
+        // ============================================================
+        // DATA REWARD
+        // ============================================================
+        const rewardList = [
+            { id: '085773641591', type: 'phone', reward: 'Power Bank 10.000mAh', icon: '🔋',
+            desc: 'Power bank premium dengan fast charging' },
+            { id: '083844843020', type: 'phone', reward: 'Voucher Belanja Rp5.000.000', icon: '🛍️',
+            desc: 'Voucher belanja di toko offline PasirPogorCell' },
+            { id: '13807164315', type: 'game', reward: 'Buku 1 pack', icon: '📚',
+            desc: 'Buku skola 1 pack isi 10 buku' },
+        ];
+
+        // ============================================================
+        // VALIDASI
+        // ============================================================
+        const PREFIX_PER_OPERATOR = {
+            'Indosat': ['0814', '0815', '0816', '0855', '0856', '0857', '0858'],
+            'Telkomsel': ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
+            'Axis': ['0831', '0832', '0833', '0838'],
+            'XL': ['0817', '0818', '0819', '0859', '0877', '0878'],
+            'Tri': ['0895', '0896', '0897', '0898', '0899'],
+            'byU': ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
+            'Smartfren': ['0881', '0882', '0883', '0884', '0885', '0886', '0887', '0888', '0889']
+        };
+
+        function validateGameId(gameName, id) {
+            const clean = id.trim().replace(/\s/g, '');
+            if (!clean) return { valid: false, message: '❌ ID tidak boleh kosong!' };
+            switch (gameName) {
+                case 'Mobile Legends':
+                    if (/^\d{4,10}\(\d{4,5}\)$/.test(clean) || /^\d{8,15}$/.test(clean)) return { valid: true,
+                        clean: clean };
+                    return { valid: false, message: '❌ Format ID MLBB: 12345678(1011) atau 123456781011' };
+                case 'Free Fire':
+                    if (/^[1-9]\d{7,10}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ ID Free Fire harus 8-11 digit angka (tidak diawali 0)' };
+                case 'PUBG Mobile':
+                    if (/^[5-7]\d{8,9}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ ID PUBG harus 9-10 digit, diawali 5,6, atau 7' };
+                case 'Call Of Duty Mobile':
+                    if (/^\d{19}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ UID CODM harus 19 digit angka' };
+                case 'Honor Of Kings':
+                    if (/^\d{11,12}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ ID HOK harus 11-12 digit angka' };
+                case 'Genshin Impact':
+                    if (/^7\d{8}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ UID Genshin Impact harus 9 digit, diawali 7' };
+                case 'Roblox':
+                    if (/^\d{1,10}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ User ID Roblox harus 1-10 digit angka' };
+                case 'Arena of Valor':
+                    if (/^\d{8,12}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ ID AOV harus 8-12 digit angka' };
+                default:
+                    if (/^[A-Za-z0-9]{5,30}$/.test(clean)) return { valid: true, clean: clean };
+                    return { valid: false, message: '❌ ID tidak valid (minimal 5 karakter alfanumerik)' };
+            }
         }
+
+        function validateInput(raw, operatorOrGame, isGame) {
+            if (!raw.trim()) return { valid: false, message: '❌ Data tidak boleh kosong!' };
+            if (isGame) return validateGameId(operatorOrGame, raw);
+            const clean = raw.replace(/[\s\-()]/g, '');
+            if (!/^\d+$/.test(clean)) return { valid: false, message: '❌ Nomor HP hanya boleh berisi angka!' };
+            if (clean.length < 10 || clean.length > 13) return { valid: false, message: '❌ Nomor HP harus 10-13 digit!' };
+            const prefixes = PREFIX_PER_OPERATOR[operatorOrGame] || [];
+            if (prefixes.length > 0 && !prefixes.some(p => clean.startsWith(p))) {
+                return { valid: false, message: `❌ Nomor harus diawali ${prefixes.join(', ')} (${operatorOrGame})` };
+            }
+            return { valid: true, clean: clean };
+        }
+
+        function applyVoucher(customerId, isGame) {
+            const type = isGame ? 'game' : 'phone';
+            const cleanId = customerId.replace(/[\s\-()]/g, '');
+            const found = voucherList.find(item => item.id === cleanId && item.type === type);
+            return found ? found.discount : 0;
+        }
+
+        // ============================================================
+        // GENERATE KODE
+        // ============================================================
+        function generateVoucherCode(customerId, productName, price) {
+            const timestamp = Date.now().toString(36).toUpperCase();
+            const raw = customerId.slice(-4) + productName.slice(0, 3) + price.toString().slice(-3) + timestamp.slice(-4);
+            let hash = 0;
+            for (let i = 0; i < raw.length; i++) {
+                const char = raw.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return 'PPC-' + Math.abs(hash).toString(36).toUpperCase().padStart(6, '0');
+        }
+
+        // ============================================================
+        // GENERATE BUKTI
+        // ============================================================
+        function generateVoucherCard(order) {
+            const canvas = document.getElementById('proofCanvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width,
+                H = canvas.height;
+
+            const grad1 = ctx.createRadialGradient(200, 160, 100, 400, 300, 800);
+            grad1.addColorStop(0, '#0D4A3C');
+            grad1.addColorStop(0.5, '#00695C');
+            grad1.addColorStop(1, '#00332A');
+            ctx.fillStyle = grad1;
+            ctx.fillRect(0, 0, W, H);
+
+            for (let i = 0; i < 120; i++) {
+                ctx.strokeStyle = i % 2 === 0 ? 'rgba(255,215,0,0.04)' : 'rgba(0,255,136,0.03)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                const x = i * 12;
+                ctx.moveTo(x, 0);
+                ctx.quadraticCurveTo(x + 20, H / 2, x + 10, H);
+                ctx.stroke();
+            }
+
+            for (let i = 0; i < 4000; i++) {
+                const x = Math.random() * W;
+                const y = Math.random() * H;
+                ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
+                ctx.fillRect(x, y, 2, 2);
+            }
+
+            ctx.save();
+            ctx.translate(W / 2, H / 2);
+            ctx.rotate(-22 * Math.PI / 180);
+            ctx.fillStyle = 'rgba(255,215,0,0.06)';
+            ctx.font = 'bold 110px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('PASIRPOGORCELL', 0, 0);
+            ctx.restore();
+
+            ctx.save();
+            ctx.translate(W / 2 + 80, H / 2 - 60);
+            ctx.rotate(12 * Math.PI / 180);
+            ctx.fillStyle = 'rgba(0,255,136,0.04)';
+            ctx.font = 'bold 60px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('CELL', 0, 0);
+            ctx.restore();
+
+            ctx.shadowColor = 'rgba(255,215,0,0.2)';
+            ctx.shadowBlur = 20;
+            ctx.strokeStyle = '#F9A825';
+            ctx.lineWidth = 5;
+            ctx.roundRect(20, 20, W - 40, H - 40, 24);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = 'rgba(255,215,0,0.25)';
+            ctx.lineWidth = 2;
+            ctx.roundRect(34, 34, W - 68, H - 68, 16);
+            ctx.stroke();
+
+            ctx.fillStyle = '#F9A825';
+            ctx.font = 'bold 48px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('🧾 BUKTI VOUCHER', W / 2, 50);
+            ctx.fillStyle = 'rgba(255,215,0,0.15)';
+            ctx.fillRect(W / 2 - 200, 100, 400, 3);
+
+            ctx.fillStyle = '#A5D6A7';
+            ctx.font = 'bold 28px Inter, sans-serif';
+            ctx.fillText('PasirPogorCell', W / 2, 120);
+
+            const idLabel = order.isGame ? 'ID Game' : 'Nomor HP';
+            const rows = [
+                ['Kode Voucher', order.voucherCode || 'PPC-XXXXXX'],
+                ['Produk', order.productName],
+                ['Provider', order.provider],
+                [idLabel, order.customerId || '-'],
+                ['Harga Asli', 'Rp ' + order.price.toLocaleString('id-ID')],
+                ['Potongan', '- Rp ' + order.voucherAmount.toLocaleString('id-ID')],
+                ['Total Bayar', 'Rp ' + order.finalPrice.toLocaleString('id-ID')],
+            ];
+
+            let y = 185;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            rows.forEach((row, idx) => {
+                const isTotal = idx === rows.length - 1;
+                const isDiscount = idx === rows.length - 2;
+                if (idx > 0 && idx < rows.length - 1) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                    ctx.fillRect(50, y - 6, W - 100, 2);
+                }
+                ctx.fillStyle = isTotal ? '#F9A825' : (isDiscount ? '#FFB74D' : '#E0F2F1');
+                ctx.font = isTotal ? 'bold 36px Inter, sans-serif' :
+                    (idx === rows.length - 2 ? 'bold 28px Inter, sans-serif' : '24px Inter, sans-serif');
+                ctx.fillText(row[0] + ' :', 60, y);
+                ctx.textAlign = 'right';
+                ctx.fillStyle = isTotal ? '#FFD54F' : (isDiscount ? '#FFAB91' : '#FFFFFF');
+                ctx.fillText(row[1], W - 60, y);
+                ctx.textAlign = 'left';
+                y += 66;
+            });
+
+            const serial = order.voucherCode + '-' + Date.now().toString(36).toUpperCase();
+            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            ctx.font = '16px monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText('SN: ' + serial, W / 2, H - 80);
+
+            const signature = btoa(serial).slice(0, 24);
+            ctx.fillStyle = 'rgba(255,255,255,0.10)';
+            ctx.font = '14px monospace';
+            ctx.fillText('⚡ ' + signature, W / 2, H - 56);
+
+            const now = new Date();
+            const dateStr = now.toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit' });
+            ctx.fillStyle = 'rgba(255,255,255,0.25)';
+            ctx.font = '16px Inter, sans-serif';
+            ctx.fillText('Dicetak: ' + dateStr, W / 2, H - 30);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx.font = '8px monospace';
+            const microText = 'PASIRPOGORCELL • VALID • ORIGINAL • ' + dateStr;
+            for (let i = 0; i < microText.length; i++) {
+                ctx.fillText(microText[i], 40 + i * 12, H - 16);
+            }
+
+            ctx.fillStyle = 'rgba(255,255,255,0.06)';
+            ctx.font = 'bold 18px Inter, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText('🏪 PasirPogorCell', 24, H - 18);
+
+            for (let i = 0; i < 5; i++) {
+                const x = 160 + i * 280;
+                const grad = ctx.createLinearGradient(x, 0, x + 100, H);
+                grad.addColorStop(0, 'rgba(255,215,0,0)');
+                grad.addColorStop(0.3, 'rgba(255,215,0,0.06)');
+                grad.addColorStop(0.5, 'rgba(255,215,0,0.10)');
+                grad.addColorStop(0.7, 'rgba(255,215,0,0.06)');
+                grad.addColorStop(1, 'rgba(255,215,0,0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(x, 0, 100, H);
+            }
+
+            const qrSize = 80;
+            const qrX = W - 100 - qrSize;
+            const qrY = H - 48 - qrSize;
+            ctx.fillStyle = 'rgba(255,255,255,0.06)';
+            for (let row = 0; row < 13; row++) {
+                for (let col = 0; col < 13; col++) {
+                    const seed = (row * 17 + col * 11 + order.voucherCode.charCodeAt(0)) % 5;
+                    if (seed > 1) {
+                        const x = qrX + col * (qrSize / 13);
+                        const y = qrY + row * (qrSize / 13);
+                        ctx.fillRect(x, y, 5, 5);
+                    }
+                }
+            }
+            ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(qrX, qrY, qrSize, qrSize);
+
+            ctx.save();
+            ctx.translate(W - 130, 150);
+            ctx.rotate(-15 * Math.PI / 180);
+            ctx.strokeStyle = 'rgba(255,215,0,0.15)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 8]);
+            ctx.beginPath();
+            ctx.arc(0, 0, 56, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = 'rgba(255,215,0,0.10)';
+            ctx.font = 'bold 22px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('✓ VALID', 0, 0);
+            ctx.restore();
+
+            for (let i = 0; i < 30; i++) {
+                const x = 30 + i * 14;
+                const y = 140;
+                ctx.fillStyle = i % 2 === 0 ? 'rgba(255,215,0,0.04)' : 'rgba(255,255,255,0.03)';
+                ctx.fillRect(x, y, 6, 6);
+            }
+            for (let i = 0; i < 30; i++) {
+                const x = 30 + i * 14;
+                const y = 148;
+                ctx.fillStyle = i % 2 === 1 ? 'rgba(255,215,0,0.04)' : 'rgba(255,255,255,0.03)';
+                ctx.fillRect(x, y, 6, 6);
+            }
+        }
+
+        function generateRewardCard(customerId, rewardItem, isGame) {
+            const canvas = document.getElementById('rewardProofCanvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width,
+                H = canvas.height;
+            const idLabel = isGame ? 'ID Game' : 'Nomor HP';
+
+            const grad = ctx.createRadialGradient(200, 160, 100, 400, 300, 800);
+            grad.addColorStop(0, '#BF360C');
+            grad.addColorStop(0.5, '#E65100');
+            grad.addColorStop(1, '#4A1A00');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+
+            for (let i = 0; i < 120; i++) {
+                ctx.strokeStyle = i % 2 === 0 ? 'rgba(255,200,0,0.04)' : 'rgba(255,100,0,0.03)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                const x = i * 12;
+                ctx.moveTo(x, 0);
+                ctx.quadraticCurveTo(x + 20, H / 2, x + 10, H);
+                ctx.stroke();
+            }
+
+            for (let i = 0; i < 4000; i++) {
+                const x = Math.random() * W;
+                const y = Math.random() * H;
+                ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
+                ctx.fillRect(x, y, 2, 2);
+            }
+
+            ctx.save();
+            ctx.translate(W / 2, H / 2);
+            ctx.rotate(-22 * Math.PI / 180);
+            ctx.fillStyle = 'rgba(255,200,0,0.06)';
+            ctx.font = 'bold 110px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('PASIRPOGORCELL', 0, 0);
+            ctx.restore();
+
+            ctx.shadowColor = 'rgba(255,200,0,0.2)';
+            ctx.shadowBlur = 20;
+            ctx.strokeStyle = '#FFB300';
+            ctx.lineWidth = 5;
+            ctx.roundRect(20, 20, W - 40, H - 40, 24);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = 'rgba(255,200,0,0.25)';
+            ctx.lineWidth = 2;
+            ctx.roundRect(34, 34, W - 68, H - 68, 16);
+            ctx.stroke();
+
+            ctx.fillStyle = '#FFB300';
+            ctx.font = 'bold 48px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('🎁 BUKTI KLAIM REWARD', W / 2, 50);
+            ctx.fillStyle = 'rgba(255,200,0,0.15)';
+            ctx.fillRect(W / 2 - 200, 100, 400, 3);
+
+            ctx.fillStyle = '#FFE0B2';
+            ctx.font = 'bold 28px Inter, sans-serif';
+            ctx.fillText('PasirPogorCell', W / 2, 120);
+
+            const rows = [
+                ['Kode Klaim', 'RWD-' + Math.abs(Date.now() + customerId.charCodeAt(0)).toString(36).toUpperCase()
+                    .padStart(8, '0')],
+                ['Hadiah', rewardItem.reward],
+                ['Deskripsi', rewardItem.desc || 'Hadiah spesial dari PasirPogorCell'],
+                [idLabel, customerId],
+                ['Status', '✅ BERHAK MENDAPATKAN HADIAH'],
+            ];
+
+            let y = 185;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            rows.forEach((row, idx) => {
+                const isStatus = idx === rows.length - 1;
+                if (idx > 0 && idx < rows.length - 1) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                    ctx.fillRect(50, y - 6, W - 100, 2);
+                }
+                ctx.fillStyle = isStatus ? '#FFB300' : '#E0F2F1';
+                ctx.font = isStatus ? 'bold 28px Inter, sans-serif' : '24px Inter, sans-serif';
+                ctx.fillText(row[0] + ' :', 60, y);
+                ctx.textAlign = 'right';
+                ctx.fillStyle = isStatus ? '#FFD54F' : '#FFFFFF';
+                ctx.fillText(row[1], W - 60, y);
+                ctx.textAlign = 'left';
+                y += 66;
+            });
+
+            ctx.fillStyle = 'rgba(255,200,0,0.08)';
+            ctx.font = '72px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(rewardItem.icon || '🎁', W / 2, H / 2 + 60);
+
+            const serial = 'RWD-' + Date.now().toString(36).toUpperCase();
+            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            ctx.font = '16px monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText('SN: ' + serial, W / 2, H - 80);
+
+            const signature = btoa(serial).slice(0, 24);
+            ctx.fillStyle = 'rgba(255,255,255,0.10)';
+            ctx.font = '14px monospace';
+            ctx.fillText('⚡ ' + signature, W / 2, H - 56);
+
+            const now = new Date();
+            const dateStr = now.toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit' });
+            ctx.fillStyle = 'rgba(255,255,255,0.25)';
+            ctx.font = '16px Inter, sans-serif';
+            ctx.fillText('Dicetak: ' + dateStr, W / 2, H - 30);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.06)';
+            ctx.font = 'bold 18px Inter, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText('🏪 PasirPogorCell', 24, H - 18);
+
+            for (let i = 0; i < 5; i++) {
+                const x = 160 + i * 280;
+                const grad2 = ctx.createLinearGradient(x, 0, x + 100, H);
+                grad2.addColorStop(0, 'rgba(255,200,0,0)');
+                grad2.addColorStop(0.3, 'rgba(255,200,0,0.06)');
+                grad2.addColorStop(0.5, 'rgba(255,200,0,0.10)');
+                grad2.addColorStop(0.7, 'rgba(255,200,0,0.06)');
+                grad2.addColorStop(1, 'rgba(255,200,0,0)');
+                ctx.fillStyle = grad2;
+                ctx.fillRect(x, 0, 100, H);
+            }
+
+            ctx.save();
+            ctx.translate(W - 130, 150);
+            ctx.rotate(-15 * Math.PI / 180);
+            ctx.strokeStyle = 'rgba(255,200,0,0.15)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 8]);
+            ctx.beginPath();
+            ctx.arc(0, 0, 56, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = 'rgba(255,200,0,0.10)';
+            ctx.font = 'bold 22px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('✓ VALID', 0, 0);
+            ctx.restore();
+        }
+
+        // ============================================================
+        // POLYFILL
+        // ============================================================
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                if (r > w / 2) r = w / 2;
+                if (r > h / 2) r = h / 2;
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                return this;
+            };
+        }
+
+        // ============================================================
+        // FUNGSI TOAST & FORMAT
+        // ============================================================
+        function formatPrice(num) { return 'Rp' + num.toLocaleString('id-ID'); }
 
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
@@ -1769,101 +2975,8 @@ const games = {
         }
 
         // ============================================================
-        // VALIDASI
+        // STATE
         // ============================================================
-
-        // Prefix operator Indonesia
-        const VALID_PREFIXES = {
-            telkomsel: ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
-            indosat: ['0814', '0815', '0816', '0855', '0856', '0857', '0858'],
-            xl: ['0817', '0818', '0819', '0859', '0877', '0878'],
-            axis: ['0831', '0832', '0833', '0838'],
-            tri: ['0895', '0896', '0897', '0898', '0899'],
-            smartfren: ['0881', '0882', '0883', '0884', '0885', '0886', '0887', '0888', '0889']
-        };
-        const ALL_PREFIXES = Object.values(VALID_PREFIXES).flat();
-
-        function validatePhoneNumber(phone) {
-            const clean = phone.replace(/[\s\-()]/g, '');
-            if (!/^\d+$/.test(clean)) {
-                return { valid: false, message: '❌ Nomor HP hanya boleh berisi angka!' };
-            }
-            if (clean.length < 10 || clean.length > 13) {
-                return { valid: false, message: '❌ Nomor HP harus 10-13 digit!' };
-            }
-            const isValidPrefix = ALL_PREFIXES.some(prefix => clean.startsWith(prefix));
-            if (!isValidPrefix) {
-                return { valid: false, message: '❌ Awalan nomor tidak valid! Gunakan nomor operator Indonesia.' };
-            }
-            return { valid: true, clean: clean };
-        }
-
-        function validateGameId(id, gameName) {
-            const clean = id.trim().replace(/\s/g, '');
-            if (!clean) return { valid: false, message: '❌ ID tidak boleh kosong!' };
-
-            switch (gameName) {
-                case 'Mobile Legends':
-                    if (/^\d{4,10}\(\d{4,5}\)$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    if (/^\d{8,15}$/.test(clean)) {
-                        if (clean.length > 7) {
-                            const zone = clean.slice(-4);
-                            const user = clean.slice(0, -4);
-                            if (user.length >= 4 && user.length <= 10) {
-                                return { valid: true, clean: `${user}(${zone})` };
-                            }
-                        }
-                    }
-                    return { valid: false, message: '❌ Format ID MLBB: 12345678(1011) atau 123456781011' };
-                case 'Free Fire':
-                    if (/^[1-9]\d{7,10}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID Free Fire harus 8-11 digit angka (tidak diawali 0)' };
-                case 'PUBG Mobile':
-                    if (/^[5-7]\d{8,9}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID PUBG harus 9-10 digit, diawali 5, 6, atau 7' };
-                case 'Call Of Duty Mobile':
-                    if (/^\d{19}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ UID CODM harus 19 digit angka' };
-                case 'Honor Of Kings':
-                    if (/^\d{11,12}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID HOK harus 11-12 digit angka' };
-                case 'Genshin Impact':
-                    if (/^7\d{8}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ UID Genshin Impact harus 9 digit, diawali 7 (Server Asia)' };
-                case 'Roblox':
-                    if (/^\d{1,10}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ User ID Roblox harus 1-10 digit angka' };
-                case 'Arena of Valor':
-                    if (/^\d{8,12}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID AOV harus 8-12 digit angka' };
-                default:
-                    if (/^[A-Za-z0-9]{5,30}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID game tidak valid (minimal 5 karakter alfanumerik)' };
-            }
-        }
-
-        // ============================================================
-        // STATE UNTUK ORDER
-        // ============================================================
-
         let currentOrder = {
             productName: '',
             price: 0,
@@ -1871,13 +2984,130 @@ const games = {
             customerId: '',
             paymentMethod: null,
             isGame: false,
-            gameType: ''
+            gameType: '',
+            voucherAmount: 0,
+            finalPrice: 0,
+            voucherCode: ''
         };
 
-        // ============================================================
-        // FUNGSI PEMESANAN
-        // ============================================================
+        let currentTab = 'internet';
+        let selectedKey = null;
+        let selectedCategory = null;
+        let searchQuery = '';
+        let allData = { internet: null, game: null };
+        let isLoading = false;
+        let isRendering = false;
 
+        let lastRewardResult = null;
+
+        // ============================================================
+        // REWARD FUNCTIONS
+        // ============================================================
+        function checkReward() {
+            const input = document.getElementById('rewardInput');
+            const raw = input.value.trim();
+            if (!raw) {
+                showToast('Harap masukkan nomor HP atau ID Game.', 'error');
+                return;
+            }
+
+            const resultEl = document.getElementById('rewardResult');
+            const iconEl = document.getElementById('resultIcon');
+            const titleEl = document.getElementById('resultTitle');
+            const descEl = document.getElementById('resultDesc');
+            const detailEl = document.getElementById('rewardDetail');
+            const codeEl = document.getElementById('rewardCode');
+            const proofBtn = document.getElementById('btnProofReward');
+            const waBtn = document.getElementById('btnWaReward');
+
+            const clean = raw.replace(/[\s\-()]/g, '');
+            const found = rewardList.find(item => item.id === clean);
+
+            if (found) {
+                lastRewardResult = { ...found, inputId: raw };
+                resultEl.className = 'reward-result show success';
+                iconEl.textContent = '🎉';
+                titleEl.textContent = '🎊 Selamat! Anda Berhak Mendapatkan Hadiah!';
+                titleEl.className = 'result-title success';
+                descEl.textContent = 'Tunjukkan bukti ini ke penjual untuk mengambil hadiah Anda.';
+                const idLabel = found.type === 'game' ? 'ID Game' : 'Nomor HP';
+                detailEl.innerHTML = `
+                        <div class="reward-item-card">
+                            <div class="r-icon">${found.icon || '🎁'}</div>
+                            <div class="r-info">
+                                <div class="r-name">${found.reward}</div>
+                                <div class="r-desc">${found.desc || 'Hadiah spesial dari PasirPogorCell'}</div>
+                                <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">
+                                    ${idLabel}: ${found.id}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                const code = 'RWD-' + Math.abs(Date.now() + found.id.charCodeAt(0)).toString(36).toUpperCase().padStart(8,
+                    '0');
+                codeEl.textContent = code;
+                proofBtn.style.display = 'flex';
+                proofBtn.disabled = false;
+                waBtn.style.display = 'flex';
+                showToast('✅ Reward ditemukan!', 'success');
+            } else {
+                lastRewardResult = null;
+                resultEl.className = 'reward-result show fail';
+                iconEl.textContent = '😔';
+                titleEl.textContent = 'Mohon Maaf';
+                titleEl.className = 'result-title fail';
+                descEl.textContent = `Nomor ${raw} tidak terdaftar dalam daftar penerima reward.`;
+                detailEl.innerHTML = `
+                        <div style="text-align:center; padding:12px; color:var(--text-secondary);">
+                            <p style="margin-bottom:8px;">Tetap semangat! Terus berlangganan di <strong>PasirPogorCell</strong> untuk mendapatkan kesempatan reward di periode berikutnya.</p>
+                            <p style="font-size:13px;">✨ Setiap pembelian paket internet atau topup game meningkatkan peluang Anda.</p>
+                        </div>
+                    `;
+                codeEl.textContent = '-';
+                proofBtn.style.display = 'none';
+                proofBtn.disabled = true;
+                waBtn.style.display = 'none';
+                showToast('❌ Nomor tidak terdaftar.', 'error');
+            }
+        }
+
+        function showRewardProof() {
+            if (!lastRewardResult) {
+                showToast('Tidak ada data reward yang ditampilkan.', 'error');
+                return;
+            }
+            const isGame = lastRewardResult.type === 'game';
+            generateRewardCard(lastRewardResult.id, lastRewardResult, isGame);
+            document.getElementById('rewardProofOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function downloadRewardProof() {
+            const canvas = document.getElementById('rewardProofCanvas');
+            const link = document.createElement('a');
+            link.download = 'Bukti_Reward_PasirPogorCell.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('📥 Bukti reward diunduh!', 'success');
+        }
+
+        function confirmRewardToWA() {
+            if (!lastRewardResult) {
+                showToast('Tidak ada data reward.', 'error');
+                return;
+            }
+            const isGame = lastRewardResult.type === 'game';
+            const idLabel = isGame ? 'ID Game' : 'Nomor HP';
+            const code = document.getElementById('rewardCode').textContent;
+            const pesan =
+                `Assalamualaikum, saya ingin mengklaim reward saya:\n\n🎁 Reward: ${lastRewardResult.reward}\n${idLabel}: ${lastRewardResult.id}\n🔑 Kode Klaim: ${code}\n\nSaya lampirkan bukti screenshot dari web PasirPogorCell.\n\nTerima kasih.`;
+            window.open(`https://wa.me/6283844843020?text=${encodeURIComponent(pesan)}`, '_blank');
+            showToast('✅ Pesan reward dikirim ke WhatsApp!', 'success');
+        }
+
+        // ============================================================
+        // ORDER FUNCTIONS
+        // ============================================================
         function startOrder(product) {
             const isGame = currentTab === 'game';
             currentOrder.productName = product.nama;
@@ -1886,8 +3116,9 @@ const games = {
             currentOrder.isGame = isGame;
             currentOrder.gameType = isGame ? selectedKey : '';
             currentOrder.paymentMethod = null;
+            currentOrder.voucherAmount = 0;
+            currentOrder.voucherCode = '';
 
-            // Tampilkan modal input
             const modal = document.getElementById('inputModalOverlay');
             const label = document.getElementById('inputLabel');
             const helper = document.getElementById('inputHelper');
@@ -1905,7 +3136,7 @@ const games = {
             } else {
                 label.textContent = 'Masukkan nomor telepon tujuan';
                 field.placeholder = 'Contoh: 08123456789';
-                helper.textContent = 'Pastikan nomor aktif dan sesuai dengan operator.';
+                helper.textContent = `Pastikan nomor aktif dan diawali prefix ${selectedKey} yang sesuai.`;
             }
             field.value = '';
             field.style.borderColor = 'var(--border-color)';
@@ -1913,10 +3144,6 @@ const games = {
             document.body.style.overflow = 'hidden';
             setTimeout(() => field.focus(), 100);
         }
-
-        // ============================================================
-        // SUBMIT INPUT (validasi)
-        // ============================================================
 
         document.getElementById('inputSubmitBtn').addEventListener('click', function() {
             const field = document.getElementById('inputField');
@@ -1926,13 +3153,7 @@ const games = {
                 return;
             }
 
-            let result;
-            if (currentOrder.isGame) {
-                result = validateGameId(raw, currentOrder.gameType);
-            } else {
-                result = validatePhoneNumber(raw);
-            }
-
+            const result = validateInput(raw, currentOrder.provider, currentOrder.isGame);
             if (!result.valid) {
                 showToast(result.message, 'error');
                 field.style.borderColor = '#EF5350';
@@ -1940,12 +3161,25 @@ const games = {
             }
 
             field.style.borderColor = 'var(--border-color)';
-            currentOrder.customerId = result.clean || raw;
+            const customerId = result.clean || raw;
+            currentOrder.customerId = customerId;
 
-            // Tutup modal input
+            const discount = applyVoucher(customerId, currentOrder.isGame);
+            currentOrder.voucherAmount = discount;
+            currentOrder.finalPrice = currentOrder.price - discount;
+            if (currentOrder.finalPrice < 0) currentOrder.finalPrice = 0;
+            if (discount > 0) {
+                currentOrder.voucherCode = generateVoucherCode(
+                    customerId,
+                    currentOrder.productName,
+                    currentOrder.price
+                );
+            } else {
+                currentOrder.voucherCode = '';
+            }
+
             document.getElementById('inputModalOverlay').classList.remove('open');
             document.body.style.overflow = '';
-            // Buka modal pembayaran
             showPaymentModal();
         });
 
@@ -1970,16 +3204,40 @@ const games = {
         });
 
         // ============================================================
-        // SHOW PAYMENT MODAL
+        // PAYMENT FUNCTIONS
         // ============================================================
-
         function showPaymentModal() {
             const modal = document.getElementById('paymentModalOverlay');
-            document.getElementById('payProductName').textContent = currentOrder.productName;
-            document.getElementById('payProductPrice').textContent = formatPrice(currentOrder.price);
-            document.getElementById('payCustomerId').textContent = currentOrder.customerId;
+            const priceSpan = document.getElementById('payProductPrice');
+            const voucherContainer = document.getElementById('voucherContainer');
+            const payVoucher = document.getElementById('payVoucherAmount');
+            const payFinal = document.getElementById('payFinalPrice');
+            const idLabel = document.getElementById('payIdLabel');
+            const customerIdSpan = document.getElementById('payCustomerId');
+            const proofBtn = document.getElementById('btnViewProof');
 
-            // Reset pilihan
+            document.getElementById('payProductName').textContent = currentOrder.productName;
+            idLabel.textContent = currentOrder.isGame ? 'ID Game' : 'Nomor HP';
+            customerIdSpan.textContent = currentOrder.customerId || '-';
+
+            if (currentOrder.voucherAmount > 0) {
+                priceSpan.innerHTML = `<span class="price-original">${formatPrice(currentOrder.price)}</span>`;
+                voucherContainer.style.display = 'block';
+                payVoucher.textContent = `- ${formatPrice(currentOrder.voucherAmount)}`;
+                payFinal.textContent = formatPrice(currentOrder.finalPrice);
+                payFinal.className = 'total price-final';
+                proofBtn.classList.add('visible');
+                proofBtn.style.display = 'inline-flex';
+            } else {
+                priceSpan.textContent = formatPrice(currentOrder.price);
+                priceSpan.className = 'total';
+                voucherContainer.style.display = 'none';
+                payFinal.textContent = formatPrice(currentOrder.price);
+                payFinal.className = 'total';
+                proofBtn.classList.remove('visible');
+                proofBtn.style.display = 'none';
+            }
+
             document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
             document.getElementById('qrContainer').style.display = 'none';
             document.getElementById('confirmPaymentBtn').disabled = true;
@@ -1989,16 +3247,11 @@ const games = {
             document.body.style.overflow = 'hidden';
         }
 
-        // ============================================================
-        // PILIH METODE PEMBAYARAN
-        // ============================================================
-
         function selectPayment(method) {
             currentOrder.paymentMethod = method;
             document.querySelectorAll('.payment-option').forEach(el => {
                 el.classList.toggle('selected', el.dataset.method === method);
             });
-
             const qrContainer = document.getElementById('qrContainer');
             if (method === 'non-tunai') {
                 qrContainer.style.display = 'block';
@@ -2008,48 +3261,39 @@ const games = {
             document.getElementById('confirmPaymentBtn').disabled = false;
         }
 
-        // ============================================================
-        // KONFIRMASI PEMBAYARAN
-        // ============================================================
-
         function confirmPayment() {
             if (!currentOrder.paymentMethod) {
                 showToast('⚠️ Pilih metode pembayaran terlebih dahulu!', 'error');
                 return;
             }
-
             const isTunai = currentOrder.paymentMethod === 'tunai';
-
-            // Tutup modal pembayaran
             document.getElementById('paymentModalOverlay').classList.remove('open');
             document.body.style.overflow = '';
-
             if (isTunai) {
-                // Langsung kirim ke WA
                 sendOrderToWA();
             } else {
-                // Tampilkan modal konfirmasi kirim bukti
                 document.getElementById('confirmModalOverlay').classList.add('open');
                 document.body.style.overflow = 'hidden';
             }
         }
 
-        // ============================================================
-        // KIRIM PESANAN KE WA
-        // ============================================================
-
         function sendOrderToWA() {
             const isTunai = currentOrder.paymentMethod === 'tunai';
             const methodText = isTunai ? 'TUNAI (Bayar di Toko)' : 'NON-TUNAI (QRIS/Transfer)';
             const paymentInstruction = isTunai ?
-                'Pembayaran secara tunai. Saya akan membayar secara langsung kepada penjual untuk memproses pesanan.' :
-                'Saya akan mengirim bukti pembayaran (screenshot transfer/QRIS) ke chat ini untuk memproses pesanan.';
+                'Pembayaran secara tunai. Saya akan membayar secara langsung kepada penjual.' :
+                'Saya akan mengirim bukti pembayaran (screenshot transfer/QRIS) ke chat ini.';
 
             const idLabel = currentOrder.isGame ? 'ID Game' : 'Nomor HP';
-
             let pesan = `Assalamualaikum, saya ingin memesan:\n`;
             pesan += `📦 ${currentOrder.productName}\n`;
             pesan += `💰 Harga: ${formatPrice(currentOrder.price)}\n`;
+            if (currentOrder.voucherAmount > 0) {
+                pesan += `🎫 Potongan Voucher Pelanggan Setia: ${formatPrice(currentOrder.voucherAmount)}\n`;
+                pesan += `🛒 Total Bayar: ${formatPrice(currentOrder.finalPrice)}\n`;
+                pesan += `🔑 Kode Voucher: ${currentOrder.voucherCode}\n`;
+                pesan += `🧾 Bukti voucher terlampir (screenshot)\n`;
+            }
             pesan += `🆔 ${idLabel}: ${currentOrder.customerId}\n`;
             pesan += `💳 Metode: ${methodText}\n`;
             pesan += `📝 ${paymentInstruction}\n\n`;
@@ -2058,160 +3302,51 @@ const games = {
             const nomorToko = '6283844843020';
             window.open(`https://wa.me/${nomorToko}?text=${encodeURIComponent(pesan)}`, '_blank');
 
-            // Reset order
-            currentOrder = {
-                productName: '',
-                price: 0,
-                provider: '',
-                customerId: '',
-                paymentMethod: null,
-                isGame: false,
-                gameType: ''
-            };
-
+            currentOrder = { productName: '', price: 0, provider: '', customerId: '', paymentMethod: null, isGame: false,
+                gameType: '', voucherAmount: 0, finalPrice: 0, voucherCode: '' };
             showToast('✅ Pesanan dikirim ke WhatsApp!', 'success');
         }
 
         // ============================================================
-        // MODAL KONFIRMASI
+        // VOUCHER PROOF
         // ============================================================
-
-        document.getElementById('confirmSendBtn').addEventListener('click', function() {
-            document.getElementById('confirmModalOverlay').classList.remove('open');
-            document.body.style.overflow = '';
-            sendOrderToWA();
-        });
-
-        document.getElementById('confirmCancelBtn').addEventListener('click', function() {
-            document.getElementById('confirmModalOverlay').classList.remove('open');
-            document.body.style.overflow = '';
-            // Kembali ke modal pembayaran
-            showPaymentModal();
-        });
-
-        document.getElementById('confirmModalOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('open');
-                document.body.style.overflow = '';
-                showPaymentModal();
-            }
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('confirmModalOverlay');
-                if (modal.classList.contains('open')) {
-                    modal.classList.remove('open');
-                    document.body.style.overflow = '';
-                    showPaymentModal();
-                }
-            }
-        });
-
-        // ============================================================
-        // QRIS FULLSCREEN & DOWNLOAD
-        // ============================================================
-
-        function toggleFullscreenQR() {
-            const overlay = document.getElementById('qrFullscreenOverlay');
-            const img = document.getElementById('qrFullscreenImg');
-            const sourceImg = document.getElementById('qrImage');
-            if (!sourceImg) {
-                showToast('⚠️ Gambar QR tidak tersedia', 'error');
+        function showVoucherProof() {
+            if (currentOrder.voucherAmount === 0) {
+                showToast('Tidak ada voucher yang digunakan.', 'info');
                 return;
             }
-            const src = sourceImg.src || 'https://raw.githubusercontent.com/adenaskolani5-jpg/PasirPogorCell/1eb3d5fd0ce82f3e05fb36249765cdbb38722f05/QRIS.png';
-            img.src = src;
-            overlay.classList.toggle('active');
-            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+            if (!currentOrder.voucherCode) {
+                currentOrder.voucherCode = generateVoucherCode(
+                    currentOrder.customerId,
+                    currentOrder.productName,
+                    currentOrder.price
+                );
+            }
+            generateVoucherCard(currentOrder);
+            document.getElementById('voucherProofOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        document.getElementById('qrFullscreenClose').addEventListener('click', function() {
-            document.getElementById('qrFullscreenOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('qrCloseBtn').addEventListener('click', function() {
-            document.getElementById('qrFullscreenOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('qrFullscreenOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
-        function downloadQR() {
-            const img = document.getElementById('qrFullscreenImg');
-            if (!img || !img.src) {
-                showToast('⚠️ Tidak ada gambar QR untuk diunduh', 'error');
-                return;
-            }
+        function downloadVoucherProof() {
+            const canvas = document.getElementById('proofCanvas');
             const link = document.createElement('a');
-            link.download = 'QRIS_PasirPogorCell.png';
-            link.href = img.src;
-            document.body.appendChild(link);
+            link.download = 'Bukti_Voucher_PasirPogorCell.png';
+            link.href = canvas.toDataURL('image/png');
             link.click();
-            document.body.removeChild(link);
-            showToast('📥 QR Code sedang diunduh...', 'success');
+            showToast('📥 Bukti voucher HD diunduh!', 'success');
         }
 
-        document.getElementById('qrDownloadBtn').addEventListener('click', downloadQR);
-
         // ============================================================
-        // TOMBOL TUTUP MODAL PEMBAYARAN
+        // RENDER FUNCTIONS
         // ============================================================
-
-        document.getElementById('paymentModalOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('open');
-                document.body.style.overflow = '';
-            }
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('paymentModalOverlay');
-                if (modal.classList.contains('open')) {
-                    modal.classList.remove('open');
-                    document.body.style.overflow = '';
-                }
-            }
-        });
-
-        // ============================================================
-        // SISA FUNGSI RENDER (dari kode asli, disesuaikan)
-        // ============================================================
-
-        // (Di sini sisa kode render, slider, tab, dll. Saya singkatkan agar fokus pada fitur baru)
-        // Anda bisa menggabungkan dengan kode render yang sudah ada sebelumnya.
-
-        // ============================================================
-        // SIMULASI API & RENDER (singkat)
-        // ============================================================
-
-        function fetchData(tab) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    if (tab === 'internet') resolve(operators);
-                    else resolve(games);
-                }, 400);
-            });
-        }
-
-        let currentTab = 'internet';
-        let selectedKey = null;
-        let selectedCategory = null;
-        let searchQuery = '';
-        let allData = { internet: null, game: null };
-        let isLoading = false;
-        let isRendering = false;
-
         const grid = document.getElementById('productGrid');
         const tabsContainer = document.getElementById('tabsContainer');
         const sliderScroll = document.getElementById('sliderScroll');
         const sliderLabel = document.getElementById('sliderLabel');
         const searchInput = document.getElementById('searchInput');
         const categoryFilter = document.getElementById('categoryFilter');
+        const productContainer = document.getElementById('productContainer');
+        const rewardScreen = document.getElementById('rewardScreen');
 
         function getUniqueKeys(tab) {
             const data = allData[tab];
@@ -2288,7 +3423,8 @@ const games = {
             }
             let html = `<button class="cat-btn ${!selectedCategory ? 'active' : ''}" data-cat="">Semua</button>`;
             cats.forEach(cat => {
-                html += `<button class="cat-btn ${selectedCategory === cat ? 'active' : ''}" data-cat="${cat}">${cat}</button>`;
+                html +=
+                    `<button class="cat-btn ${selectedCategory === cat ? 'active' : ''}" data-cat="${cat}">${cat}</button>`;
             });
             categoryFilter.innerHTML = html;
             categoryFilter.querySelectorAll('.cat-btn').forEach(btn => {
@@ -2446,7 +3582,19 @@ const games = {
                             const nama = this.dataset.id;
                             const allItems = getFilteredItems(currentTab, selectedKey, selectedCategory, '');
                             const product = allItems.find(p => p.nama === nama);
-                            if (product) openInfoModal(product);
+                            if (product) {
+                                document.getElementById('infoTitle').textContent = product.nama;
+                                document.getElementById('infoSub').textContent = currentTab === 'internet' ?
+                                    selectedKey : 'Game';
+                                document.getElementById('infoProvider').textContent = currentTab === 'internet' ?
+                                    selectedKey : 'Game';
+                                document.getElementById('infoQuota').textContent = product.kuota ?
+                                    `${product.kuota} GB` : '-';
+                                document.getElementById('infoKeterangan').textContent = product.ket ||
+                                    'Tidak ada keterangan tambahan.';
+                                document.getElementById('infoModalOverlay').classList.add('open');
+                                document.body.style.overflow = 'hidden';
+                            }
                         });
                     });
                 }
@@ -2463,26 +3611,37 @@ const games = {
             isLoading = true;
             renderSkeletons(6);
             try {
-                const data = await fetchData(tab);
-                allData[tab] = data;
+                await new Promise(resolve => setTimeout(resolve, 400));
+                allData[tab] = tab === 'internet' ? operators : games;
             } catch (e) {
                 showToast('Gagal memuat data', 'error');
             } finally {
                 isLoading = false;
-                if (selectedKey) {
-                    renderGrid();
-                } else {
-                    renderSlider();
-                }
+                if (selectedKey) renderGrid();
+                else renderSlider();
             }
         }
 
         async function switchTab(tab) {
             if (tab === currentTab) return;
-            if (isRendering) {
-                setTimeout(() => switchTab(tab), 300);
+            if (isRendering) { setTimeout(() => switchTab(tab), 300); return; }
+
+            if (tab === 'reward') {
+                productContainer.style.display = 'none';
+                rewardScreen.classList.add('active');
+                currentTab = tab;
+                tabsContainer.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.tab === tab);
+                });
+                // Reset reward result
+                const resultEl = document.getElementById('rewardResult');
+                if (resultEl) resultEl.className = 'reward-result';
                 return;
             }
+
+            productContainer.style.display = 'block';
+            rewardScreen.classList.remove('active');
+
             currentTab = tab;
             selectedKey = null;
             selectedCategory = null;
@@ -2498,25 +3657,121 @@ const games = {
         }
 
         // ============================================================
-        // MODAL INFO
+        // EVENT LISTENERS
         // ============================================================
 
-        function openInfoModal(product) {
-            if (!product) return;
-            document.getElementById('infoTitle').textContent = product.nama;
-            document.getElementById('infoSub').textContent = currentTab === 'internet' ? selectedKey : 'Game';
-            document.getElementById('infoProvider').textContent = currentTab === 'internet' ? selectedKey : 'Game';
-            document.getElementById('infoQuota').textContent = product.kuota ? `${product.kuota} GB` : '-';
-            document.getElementById('infoKeterangan').textContent = product.ket || 'Tidak ada keterangan tambahan.';
-            document.getElementById('infoModalOverlay').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
+        // Reward
+        document.getElementById('btnCheckReward').addEventListener('click', checkReward);
+        document.getElementById('rewardInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') checkReward();
+        });
+        document.getElementById('btnProofReward').addEventListener('click', showRewardProof);
+        document.getElementById('btnWaReward').addEventListener('click', confirmRewardToWA);
 
-        document.getElementById('infoCloseBtn').addEventListener('click', function() {
-            document.getElementById('infoModalOverlay').classList.remove('open');
+        // Reward proof overlay
+        document.getElementById('closeRewardProofBtn').addEventListener('click', function() {
+            document.getElementById('rewardProofOverlay').classList.remove('active');
             document.body.style.overflow = '';
         });
-        document.getElementById('infoModalOverlay').addEventListener('click', function(e) {
+        document.getElementById('closeRewardProofBtn2').addEventListener('click', function() {
+            document.getElementById('rewardProofOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('rewardProofOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        document.getElementById('downloadRewardBtn').addEventListener('click', downloadRewardProof);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('rewardProofOverlay');
+                if (overlay.classList.contains('active')) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        // Voucher proof
+        document.getElementById('btnViewProof').addEventListener('click', showVoucherProof);
+        document.getElementById('closeProofBtn').addEventListener('click', function() {
+            document.getElementById('voucherProofOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('closeProofBtn2').addEventListener('click', function() {
+            document.getElementById('voucherProofOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('voucherProofOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        document.getElementById('downloadProofBtn').addEventListener('click', downloadVoucherProof);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('voucherProofOverlay');
+                if (overlay.classList.contains('active')) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        // Tabs
+        tabsContainer.addEventListener('click', async function(e) {
+            const btn = e.target.closest('.tab-btn');
+            if (!btn) return;
+            const tab = btn.dataset.tab;
+            if (tab === currentTab) return;
+            await switchTab(tab);
+        });
+
+        // Search
+        let searchDebounceTimer = null;
+        searchInput.addEventListener('input', function() {
+            if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(() => {
+                searchQuery = this.value;
+                localStorage.setItem('ppc_search', searchQuery);
+                renderGrid();
+            }, 300);
+        });
+
+        // Confirm modal
+        document.getElementById('confirmSendBtn').addEventListener('click', function() {
+            document.getElementById('confirmModalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+            sendOrderToWA();
+        });
+        document.getElementById('confirmCancelBtn').addEventListener('click', function() {
+            document.getElementById('confirmModalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+            showPaymentModal();
+        });
+        document.getElementById('confirmModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('open');
+                document.body.style.overflow = '';
+                showPaymentModal();
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('confirmModalOverlay');
+                if (modal.classList.contains('open')) {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                    showPaymentModal();
+                }
+            }
+        });
+
+        // Payment modal
+        document.getElementById('paymentModalOverlay').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('open');
                 document.body.style.overflow = '';
@@ -2524,7 +3779,7 @@ const games = {
         });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modal = document.getElementById('infoModalOverlay');
+                const modal = document.getElementById('paymentModalOverlay');
                 if (modal.classList.contains('open')) {
                     modal.classList.remove('open');
                     document.body.style.overflow = '';
@@ -2532,16 +3787,47 @@ const games = {
             }
         });
 
-        // ============================================================
-        // MODAL DETAIL (dari tombol di slider atau card)
-        // ============================================================
+        // QR
+        function toggleFullscreenQR() {
+            const overlay = document.getElementById('qrFullscreenOverlay');
+            const img = document.getElementById('qrFullscreenImg');
+            const sourceImg = document.getElementById('qrImage');
+            if (!sourceImg) { showToast('⚠️ Gambar QR tidak tersedia', 'error'); return; }
+            const src = sourceImg.src ||
+                'https://raw.githubusercontent.com/adenaskolani5-jpg/PasirPogorCell/1eb3d5fd0ce82f3e05fb36249765cdbb38722f05/QRIS.png';
+            img.src = src;
+            overlay.classList.toggle('active');
+            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+        }
+        document.getElementById('qrFullscreenClose').addEventListener('click', function() {
+            document.getElementById('qrFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('qrCloseBtn').addEventListener('click', function() {
+            document.getElementById('qrFullscreenOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('qrFullscreenOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
 
-        // (Saya asumsikan modal detail sudah ada, tidak diubah)
+        function downloadQR() {
+            const img = document.getElementById('qrFullscreenImg');
+            if (!img || !img.src) { showToast('⚠️ Tidak ada gambar QR untuk diunduh', 'error'); return; }
+            const link = document.createElement('a');
+            link.download = 'QRIS_PasirPogorCell.png';
+            link.href = img.src;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('📥 QR Code sedang diunduh...', 'success');
+        }
+        document.getElementById('qrDownloadBtn').addEventListener('click', downloadQR);
 
-        // ============================================================
-        // SETTINGS
-        // ============================================================
-
+        // Settings
         document.getElementById('settingsToggle').addEventListener('click', function() {
             document.getElementById('settingsModalOverlay').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -2566,10 +3852,51 @@ const games = {
             }
         });
 
+        // Info modal
+        document.getElementById('infoCloseBtn').addEventListener('click', function() {
+            document.getElementById('infoModalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('infoModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('infoModalOverlay');
+                if (modal.classList.contains('open')) {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        // Detail modal
+        document.getElementById('modalCloseBtn').addEventListener('click', function() {
+            document.getElementById('modalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('modalOverlay');
+                if (modal.classList.contains('open')) {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
         // ============================================================
         // THEME
         // ============================================================
-
         const themeToggleBtn = document.getElementById('themeToggle');
         const themeIcon2 = themeToggleBtn.querySelector('i');
 
@@ -2583,49 +3910,18 @@ const games = {
             }
             localStorage.setItem('ppc_theme', dark ? 'dark' : 'light');
         }
-
         const savedTheme2 = localStorage.getItem('ppc_theme');
         if (savedTheme2 === 'dark' || (!savedTheme2 && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             setTheme(true);
-        } else {
-            setTheme(false);
-        }
-
+        } else { setTheme(false); }
         themeToggleBtn.addEventListener('click', function() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             setTheme(!isDark);
         });
 
         // ============================================================
-        // TABS EVENT
-        // ============================================================
-
-        tabsContainer.addEventListener('click', async function(e) {
-            const btn = e.target.closest('.tab-btn');
-            if (!btn) return;
-            const tab = btn.dataset.tab;
-            if (tab === currentTab) return;
-            await switchTab(tab);
-        });
-
-        // ============================================================
-        // SEARCH
-        // ============================================================
-
-        let searchDebounceTimer = null;
-        searchInput.addEventListener('input', function() {
-            if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
-            searchDebounceTimer = setTimeout(() => {
-                searchQuery = this.value;
-                localStorage.setItem('ppc_search', searchQuery);
-                renderGrid();
-            }, 300);
-        });
-
-        // ============================================================
         // SCROLL PROGRESS & BACK TO TOP
         // ============================================================
-
         const progressBar = document.getElementById('progressBar');
         const scrollTopBtn2 = document.getElementById('scrollTopBtn');
 
@@ -2635,13 +3931,11 @@ const games = {
             progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
             scrollTopBtn2.classList.toggle('visible', scrollTop > 600);
         });
-
         scrollTopBtn2.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         // ============================================================
         // INIT
         // ============================================================
-
         async function init() {
             showToast('Selamat datang di PasirPogorCell!', 'info');
             const savedTab = localStorage.getItem('ppc_tab');
@@ -2654,9 +3948,7 @@ const games = {
             await loadData(currentTab);
             const savedKey = localStorage.getItem('ppc_selectedKey');
             const keys = getUniqueKeys(currentTab);
-            if (savedKey && keys.includes(savedKey)) {
-                selectedKey = savedKey;
-            }
+            if (savedKey && keys.includes(savedKey)) { selectedKey = savedKey; }
             const savedSearch = localStorage.getItem('ppc_search');
             if (savedSearch) {
                 searchQuery = savedSearch;
@@ -2664,9 +3956,17 @@ const games = {
             }
             renderSlider();
             renderCategoryFilter();
+            rewardScreen.classList.remove('active');
+            productContainer.style.display = 'block';
         }
 
         init();
+
+        console.log('✅ PasirPogorCell siap!');
+        console.log('📋 Voucher Pelanggan Setia:', voucherList);
+        console.log('🎁 Daftar Reward:', rewardList);
+        console.log('📱 Validasi nomor sesuai operator:', Object.keys(PREFIX_PER_OPERATOR));
+        console.log('🎮 Validasi ID Game tersedia untuk:', Object.keys(games));
     </script>
 </body>
 </html>
