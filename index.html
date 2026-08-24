@@ -831,6 +831,105 @@
  0%,100%{ transform: scale(1.3) rotate(-10deg); }
  50%{ transform: scale(1.4) rotate(10deg); }
 }
+/* ===== 3D SOFT - GARIS TIPIS TAPI BERBAYANG MODE TERANG SAJA ===== */
+html:not([data-theme="dark"]) .product-card {
+  background: #ffffff !important;
+  border: 1.2px solid #b8d5ca !important;
+  border-bottom: 3px solid #4a8c7a !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 0 rgba(74,140,122,0.18), 0 8px 20px rgba(0,77,64,0.08) !important;
+  transform: translateY(0) !important;
+  transition: all 0.25s ease !important;
+}
+
+html:not([data-theme="dark"]) .product-card:hover {
+  transform: translateY(-4px) !important;
+  border-bottom: 4px solid #004D40 !important;
+  border-color: #8ac0ad !important;
+  box-shadow: 0 6px 0 rgba(0,77,64,0.15), 0 14px 28px rgba(0,77,64,0.14) !important;
+}
+
+html:not([data-theme="dark"]) .product-card:active {
+  transform: translateY(-1px) !important;
+  border-bottom: 2px solid #4a8c7a !important;
+  box-shadow: 0 2px 0 rgba(74,140,122,0.18), 0 4px 12px rgba(0,77,64,0.08) !important;
+}
+/* ===== MODEL 2 - PILL CAPSULE ELEGAN ===== */
+.slider-scroll{
+  gap:10px!important;
+  padding:6px 2px 16px!important;
+}
+
+.slider-item{
+  flex:0 0 auto!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:auto!important;
+  height:42px!important;
+  padding:0 14px 0 6px!important;
+  background:#fff!important;
+  border:1px solid #dbe9e3!important;
+  border-radius:50px!important;
+  box-shadow:0 1px 4px rgba(0,77,64,.05)!important;
+  opacity:1!important;
+  transform:none!important;
+  transition:all .2s ease!important;
+}
+
+.slider-item img{
+  width:30px!important;
+  height:30px!important;
+  border-radius:50%!important;
+  background:#f2faf7!important;
+  border:none!important;
+  padding:4px!important;
+  margin:0!important;
+  box-shadow:none!important;
+}
+
+.slider-item .slider-name{
+  font-size:13px!important;
+  font-weight:500!important;
+  color:var(--text-secondary)!important;
+  white-space:nowrap!important;
+}
+
+.slider-item:hover{
+  border-color:#8ac0ad!important;
+  box-shadow:0 3px 10px rgba(0,77,64,.10)!important;
+  transform:translateY(-1px)!important;
+}
+
+/* Active jadi solid ijo */
+.slider-item.active{
+  background:#004D40!important;
+  border-color:#004D40!important;
+  box-shadow:0 4px 12px rgba(0,77,64,.20)!important;
+}
+
+.slider-item.active img{
+  background:#fff!important;
+  border:none!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+.slider-item.active .slider-name{
+  color:#fff!important;
+  font-weight:600!important;
+}
+
+.slider-item.active::after{ display:none!important; }
+
+[data-theme="dark"] .slider-item{
+  background:var(--bg-card)!important;
+  border-color:var(--border-color)!important;
+}
+[data-theme="dark"] .slider-item.active{
+  background:var(--primary-light)!important;
+  border-color:var(--primary-light)!important;
+}
     </style>
 </head>
 <body>
