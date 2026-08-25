@@ -2018,97 +2018,123 @@ const games = {
             setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3500);
         }
 
-        // ============================================================
-        // VALIDASI
-        // ============================================================
+// ============================================================
+// VALIDASI SPESIFIK PER OPERATOR
+// ============================================================
 
-        // Prefix operator Indonesia
-        const VALID_PREFIXES = {
-            telkomsel: ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
-            indosat: ['0814', '0815', '0816', '0855', '0856', '0857', '0858'],
-            xl: ['0817', '0818', '0819', '0859', '0877', '0878'],
-            axis: ['0831', '0832', '0833', '0838'],
-            tri: ['0895', '0896', '0897', '0898', '0899'],
-            smartfren: ['0881', '0882', '0883', '0884', '0885', '0886', '0887', '0888', '0889']
-        };
-        const ALL_PREFIXES = Object.values(VALID_PREFIXES).flat();
+const PREFIX_PER_OPERATOR = {
+    'Indosat': ['0814', '0815', '0816', '0855', '0856', '0857', '0858'],
+    'Telkomsel': ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
+    'Axis': ['0831', '0832', '0833', '0838'],
+    'XL': ['0817', '0818', '0819', '0859', '0877', '0878'],
+    'Tri': ['0895', '0896', '0897', '0898', '0899'],
+    'byU': ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'], // byU pakai prefix Telkomsel
+    'Smartfren': ['0881', '0882', '0883', '0884', '0885', '0886', '0887', '0888', '0889']
+};
 
-        function validatePhoneNumber(phone) {
-            const clean = phone.replace(/[\s\-()]/g, '');
-            if (!/^\d+$/.test(clean)) {
-                return { valid: false, message: '❌ Nomor HP hanya boleh berisi angka!' };
+// ============================================================
+// VALIDASI SPESIFIK PER GAME
+// ============================================================
+
+function validateGameId(gameName, id) {
+    const clean = id.trim().replace(/\s/g, '');
+    if (!clean) return { valid: false, message: '❌ ID tidak boleh kosong!' };
+
+    switch (gameName) {
+        case 'Mobile Legends':
+            if (/^\d{4,10}\(\d{4,5}\)$/.test(clean)) {
+                return { valid: true, clean: clean };
             }
-            if (clean.length < 10 || clean.length > 13) {
-                return { valid: false, message: '❌ Nomor HP harus 10-13 digit!' };
+            if (/^\d{8,15}$/.test(clean)) {
+                if (clean.length > 7) {
+                    const zone = clean.slice(-4);
+                    const user = clean.slice(0, -4);
+                    if (user.length >= 4 && user.length <= 10) {
+                        return { valid: true, clean: `${user}(${zone})` };
+                    }
+                }
             }
-            const isValidPrefix = ALL_PREFIXES.some(prefix => clean.startsWith(prefix));
-            if (!isValidPrefix) {
-                return { valid: false, message: '❌ Awalan nomor tidak valid! Gunakan nomor operator Indonesia.' };
+            return { valid: false, message: '❌ Format ID MLBB: 12345678(1011) atau 123456781011' };
+        case 'Free Fire':
+            if (/^[1-9]\d{7,10}$/.test(clean)) {
+                return { valid: true, clean: clean };
             }
+            return { valid: false, message: '❌ ID Free Fire harus 8-11 digit angka (tidak diawali 0)' };
+        case 'PUBG Mobile':
+            if (/^[5-7]\d{8,9}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ ID PUBG harus 9-10 digit, diawali 5, 6, atau 7' };
+        case 'Call Of Duty Mobile':
+            if (/^\d{19}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ UID CODM harus 19 digit angka' };
+        case 'Honor Of Kings':
+            if (/^\d{11,12}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ ID HOK harus 11-12 digit angka' };
+        case 'Genshin Impact':
+            if (/^7\d{8}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ UID Genshin Impact harus 9 digit, diawali 7 (Server Asia)' };
+        case 'Roblox':
+            if (/^\d{1,10}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ User ID Roblox harus 1-10 digit angka' };
+        case 'Arena of Valor':
+            if (/^\d{8,12}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ ID AOV harus 8-12 digit angka' };
+        default:
+            if (/^[A-Za-z0-9]{5,30}$/.test(clean)) {
+                return { valid: true, clean: clean };
+            }
+            return { valid: false, message: '❌ ID tidak valid (minimal 5 karakter alfanumerik)' };
+    }
+}
+
+// ============================================================
+// FUNGSI VALIDASI UTAMA (GANTI YANG LAMA)
+// ============================================================
+
+function validateInput(raw, operatorOrGame, isGame) {
+    if (!raw.trim()) {
+        return { valid: false, message: '❌ Data tidak boleh kosong!' };
+    }
+
+    if (isGame) {
+        // Validasi ID Game
+        return validateGameId(operatorOrGame, raw);
+    } else {
+        // Validasi Nomor HP dengan prefix operator spesifik
+        const clean = raw.replace(/[\s\-()]/g, '');
+        if (!/^\d+$/.test(clean)) {
+            return { valid: false, message: '❌ Nomor HP hanya boleh berisi angka!' };
+        }
+        if (clean.length < 10 || clean.length > 13) {
+            return { valid: false, message: '❌ Nomor HP harus 10-13 digit!' };
+        }
+
+        // Cek prefix sesuai operator yang dipilih
+        const prefixes = PREFIX_PER_OPERATOR[operatorOrGame] || [];
+        if (prefixes.length === 0) {
+            // Jika operator tidak terdaftar, gunakan validasi umum
             return { valid: true, clean: clean };
         }
 
-        function validateGameId(id, gameName) {
-            const clean = id.trim().replace(/\s/g, '');
-            if (!clean) return { valid: false, message: '❌ ID tidak boleh kosong!' };
-
-            switch (gameName) {
-                case 'Mobile Legends':
-                    if (/^\d{4,10}\(\d{4,5}\)$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    if (/^\d{8,15}$/.test(clean)) {
-                        if (clean.length > 7) {
-                            const zone = clean.slice(-4);
-                            const user = clean.slice(0, -4);
-                            if (user.length >= 4 && user.length <= 10) {
-                                return { valid: true, clean: `${user}(${zone})` };
-                            }
-                        }
-                    }
-                    return { valid: false, message: '❌ Format ID MLBB: 12345678(1011) atau 123456781011' };
-                case 'Free Fire':
-                    if (/^[1-9]\d{7,10}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID Free Fire harus 8-11 digit angka (tidak diawali 0)' };
-                case 'PUBG Mobile':
-                    if (/^[5-7]\d{8,9}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID PUBG harus 9-10 digit, diawali 5, 6, atau 7' };
-                case 'Call Of Duty Mobile':
-                    if (/^\d{19}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ UID CODM harus 19 digit angka' };
-                case 'Honor Of Kings':
-                    if (/^\d{11,12}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID HOK harus 11-12 digit angka' };
-                case 'Genshin Impact':
-                    if (/^7\d{8}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ UID Genshin Impact harus 9 digit, diawali 7 (Server Asia)' };
-                case 'Roblox':
-                    if (/^\d{1,10}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ User ID Roblox harus 1-10 digit angka' };
-                case 'Arena of Valor':
-                    if (/^\d{8,12}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID AOV harus 8-12 digit angka' };
-                default:
-                    if (/^[A-Za-z0-9]{5,30}$/.test(clean)) {
-                        return { valid: true, clean: clean };
-                    }
-                    return { valid: false, message: '❌ ID game tidak valid (minimal 5 karakter alfanumerik)' };
-            }
+        const isValidPrefix = prefixes.some(p => clean.startsWith(p));
+        if (!isValidPrefix) {
+            const prefixList = prefixes.join(', ');
+            return { valid: false, message: `❌ Nomor harus diawali ${prefixList} (${operatorOrGame})` };
         }
+        return { valid: true, clean: clean };
+    }
+}
 
         // ============================================================
         // STATE UNTUK ORDER
@@ -2124,80 +2150,81 @@ const games = {
             gameType: ''
         };
 
-        // ============================================================
-        // FUNGSI PEMESANAN
-        // ============================================================
+// ============================================================
+// FUNGSI PEMESANAN (startOrder) - PERBAIKAN
+// ============================================================
 
-        function startOrder(product) {
-            const isGame = currentTab === 'game';
-            currentOrder.productName = product.nama;
-            currentOrder.price = product.harga;
-            currentOrder.provider = selectedKey;
-            currentOrder.isGame = isGame;
-            currentOrder.gameType = isGame ? selectedKey : '';
-            currentOrder.paymentMethod = null;
+function startOrder(product) {
+    const isGame = currentTab === 'game';
+    currentOrder.productName = product.nama;
+    currentOrder.price = product.harga;
+    currentOrder.provider = selectedKey;
+    currentOrder.isGame = isGame;
+    currentOrder.gameType = isGame ? selectedKey : '';
+    currentOrder.paymentMethod = null;
+    currentOrder.voucherAmount = 0;
+    currentOrder.voucherCode = '';
 
-            // Tampilkan modal input
-            const modal = document.getElementById('inputModalOverlay');
-            const label = document.getElementById('inputLabel');
-            const helper = document.getElementById('inputHelper');
-            const field = document.getElementById('inputField');
-            const productName = document.getElementById('inputProductName');
-            const productDetail = document.getElementById('inputProductDetail');
+    const modal = document.getElementById('inputModalOverlay');
+    const label = document.getElementById('inputLabel');
+    const helper = document.getElementById('inputHelper');
+    const field = document.getElementById('inputField');
+    const productName = document.getElementById('inputProductName');
+    const productDetail = document.getElementById('inputProductDetail');
 
-            productName.textContent = product.nama;
-            productDetail.textContent = `${selectedKey} | ${formatPrice(product.harga)}`;
+    productName.textContent = product.nama;
+    productDetail.textContent = `${selectedKey} | ${formatPrice(product.harga)}`;
 
-            if (isGame) {
-                label.textContent = 'Masukkan ID Game / User ID';
-                field.placeholder = 'Contoh: 123456789';
-                helper.textContent = 'Pastikan ID game yang dimasukkan benar dan sesuai format.';
-            } else {
-                label.textContent = 'Masukkan nomor telepon tujuan';
-                field.placeholder = 'Contoh: 08123456789';
-                helper.textContent = 'Pastikan nomor aktif dan sesuai dengan operator.';
-            }
-            field.value = '';
-            field.style.borderColor = 'var(--border-color)';
-            modal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => field.focus(), 100);
-        }
+    if (isGame) {
+        label.textContent = 'Masukkan ID Game / User ID';
+        field.placeholder = 'Contoh: 123456789';
+        helper.textContent = 'Pastikan ID game yang dimasukkan benar dan sesuai format.';
+    } else {
+        label.textContent = 'Masukkan nomor telepon tujuan';
+        field.placeholder = 'Contoh: 08123456789';
+        helper.textContent = `Pastikan nomor aktif dan diawali prefix ${selectedKey} yang sesuai.`;
+    }
+    field.value = '';
+    field.style.borderColor = 'var(--border-color)';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => field.focus(), 100);
+}
 
-        // ============================================================
-        // SUBMIT INPUT (validasi)
-        // ============================================================
+// ============================================================
+// SUBMIT INPUT (dengan validasi spesifik) - PERBAIKAN
+// ============================================================
 
-        document.getElementById('inputSubmitBtn').addEventListener('click', function() {
-            const field = document.getElementById('inputField');
-            const raw = field.value.trim();
-            if (!raw) {
-                showToast('Harap masukkan data tujuan terlebih dahulu.', 'error');
-                return;
-            }
+document.getElementById('inputSubmitBtn').addEventListener('click', function() {
+    const field = document.getElementById('inputField');
+    const raw = field.value.trim();
+    if (!raw) {
+        showToast('Harap masukkan data tujuan terlebih dahulu.', 'error');
+        return;
+    }
 
-            let result;
-            if (currentOrder.isGame) {
-                result = validateGameId(raw, currentOrder.gameType);
-            } else {
-                result = validatePhoneNumber(raw);
-            }
+    // Gunakan validateInput dengan parameter yang benar
+    const result = validateInput(raw, currentOrder.provider, currentOrder.isGame);
+    if (!result.valid) {
+        showToast(result.message, 'error');
+        field.style.borderColor = '#EF5350';
+        return;
+    }
 
-            if (!result.valid) {
-                showToast(result.message, 'error');
-                field.style.borderColor = '#EF5350';
-                return;
-            }
+    field.style.borderColor = 'var(--border-color)';
+    const customerId = result.clean || raw;
+    currentOrder.customerId = customerId;
 
-            field.style.borderColor = 'var(--border-color)';
-            currentOrder.customerId = result.clean || raw;
+    // CEK VOUCHER (jika ada fungsi voucher)
+    // const discount = applyVoucher(customerId, currentOrder.isGame);
+    // currentOrder.voucherAmount = discount;
+    // currentOrder.finalPrice = currentOrder.price - discount;
+    // if (currentOrder.finalPrice < 0) currentOrder.finalPrice = 0;
 
-            // Tutup modal input
-            document.getElementById('inputModalOverlay').classList.remove('open');
-            document.body.style.overflow = '';
-            // Buka modal pembayaran
-            showPaymentModal();
-        });
+    document.getElementById('inputModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    showPaymentModal();
+});
 
         document.getElementById('inputCancelBtn').addEventListener('click', function() {
             document.getElementById('inputModalOverlay').classList.remove('open');
