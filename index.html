@@ -862,20 +862,7 @@ html:not([data-theme="dark"]) .product-card:active {
   -webkit-overflow-scrolling:touch!important;
   scroll-behavior:smooth!important;
 }
-.slider-scroll::before{
-  content:''!important;
-  position:absolute!important;
-  top:6px!important; left:0!important;
-  width:var(--slide-w,132px)!important;
-  height:42px!important;
-  background:#004D40!important;
-  border-radius:50px!important;
-  box-shadow:0 4px 12px rgba(0,77,64,.20)!important;
-  z-index:0!important;
-  pointer-events:none!important;
-  transform:translateX(var(--slide-x,0px))!important;
-  transition:transform.52s cubic-bezier(.68,-0.3,.32,1.6)!important;
-}
+
 .slider-item{
   flex:0 0 132px!important; width:132px!important; min-width:132px!important; max-width:132px!important;
   height:42px!important; flex-direction:row!important; align-items:center!important; gap:8px!important;
@@ -884,128 +871,7 @@ html:not([data-theme="dark"]) .product-card:active {
   cursor:pointer!important; touch-action:manipulation!important; user-select:none!important;
 }
 .slider-item img{ width:30px!important; height:30px!important; min-width:30px!important; border-radius:50%!important; background:#f2faf7!important; padding:4px!important; pointer-events:none!important; }
-/* ===== PILL CAPSULE - FINAL POLISH - WARNA TERANG & GELAP BALIK NORMAL ===== */
-.slider-scroll{
-  gap:10px!important;
-  padding:6px 2px 16px!important;
-  position:relative!important;
-  -webkit-overflow-scrolling:touch!important;
-  scroll-behavior:smooth!important;
-}
-.slider-scroll::before{
-  content:''!important;
-  position:absolute!important;
-  top:6px!important; left:0!important;
-  width:var(--slide-w,132px)!important;
-  height:42px!important;
-/* ===== IJO PAS - NGGAK TERLALU CERAH NGGAK TERLALU GELAP ===== */
-.slider-scroll::before{
-  background:#18644B!important; /* ijo tengah */
-}
-.slider-item.active{
-  border-color:#18644B!important;
-}
-[data-theme="dark"] .slider-scroll::before{
-  background:#1E7A5C!important; /* di mode gelap naikin dikit biar keliatan */
-}
-[data-theme="dark"] .slider-item.active{
-  border-color:#1E7A5C!important;
-}
-  border-radius:50px!important;
-  box-shadow:0 4px 12px rgba(0,77,64,.20)!important;
-  z-index:0!important;
-  pointer-events:none!important;
-  transform:translateX(var(--slide-x,0px))!important;
-  transition:transform .52s cubic-bezier(.68,-0.3,.32,1.6)!important;
-}
 
-/* Item */
-.slider-item{
-  flex:0 0 132px!important; 
-  width:132px!important; min-width:132px!important; max-width:132px!important;
-  height:42px!important; 
-  flex-direction:row!important; 
-  align-items:center!important; 
-  gap:8px!important;
-  padding:0 10px 0 6px!important; 
-  border:1px solid #dbe9e3!important;
-  border-radius:50px!important; 
-  position:relative!important; 
-  z-index:1!important;
-  cursor:pointer!important; 
-  touch-action:manipulation!important; 
-  user-select:none!important;
-  background:#fff!important;
-  box-shadow:0 1px 4px rgba(0,77,64,.05)!important;
-}
-
-.slider-item img{ 
-  width:30px!important; height:30px!important; min-width:30px!important; 
-  border-radius:50%!important; background:#f2faf7!important; 
-  padding:4px!important; pointer-events:none!important; 
-}
-
-.slider-item .slider-name{ 
-  font-size:12.5px!important; font-weight:500!important;
-  color:var(--text-secondary)!important;
-  max-width:82px!important; 
-  white-space:nowrap!important; 
-  overflow:hidden!important; 
-  text-overflow:ellipsis!important; 
-  display:block!important; 
-  line-height:1.2!important;
-  pointer-events:none!important; 
-}
-
-/* Non-aktif */
-.slider-item:not(.active){ 
-  background:#fff!important; 
-  border-color:#dbe9e3!important;
-}
-
-/* Aktif - teks jadi putih, background transparan biar blok geser keliatan */
-.slider-item.active{ 
-  background:transparent!important; 
-  border-color:#004D40!important; 
-  box-shadow:none!important;
-}
-.slider-item.active img{ background:#fff!important; }
-.slider-item.active .slider-name{ color:#fff!important; font-weight:600!important; }
-.slider-item.active::after{ display:none!important; }
-
-/* ===== MODE GELAP - BALIK KAYAK SEBELUMNYA ===== */
-[data-theme="dark"] .slider-item:not(.active){
-  background:var(--bg-card)!important;
-  border-color:var(--border-color)!important;
-  box-shadow:0 1px 4px rgba(0,0,0,.3)!important;
-}
-[data-theme="dark"] .slider-item:not(.active) .slider-name{
-  color:var(--text-secondary)!important;
-}
-[data-theme="dark"] .slider-scroll::before{
-  background:var(--gradient-primary)!important; /* SAMA PERSIS KAYAK MENU PAKET INTERNET */
-  box-shadow:0 6px 20px rgba(38,166,154,.35)!important;
-}
-[data-theme="dark"] .slider-item.active{
-  border-color:#26A69A!important;
-}
-  box-shadow:0 4px 12px rgba(42,138,104,.35)!important;
-}
-[data-theme="dark"] .slider-item.active{
-  border-color:#2A8A68!important;
-}
-  box-shadow:0 4px 12px rgba(38,166,154,.25)!important;
-}
-[data-theme="dark"] .slider-item.active{
-  border-color:var(--primary-light)!important;
-  background:transparent!important;
-}
-.slider-item:not(.active){ background:#fff!important; box-shadow:0 1px 4px rgba(0,77,64,.05)!important; }
-.slider-item.active{ background:transparent!important; border-color:#004D40!important; }
-.slider-item.active img{ background:#fff!important; }
-.slider-item.active.slider-name{ color:#fff!important; font-weight:600!important; }
-[data-theme="dark"].slider-item:not(.active){ background:var(--bg-card)!important; }
-[data-theme="dark"].slider-scroll::before{ background:var(--primary-light)!important; }
 /* ===== LOGO PASIRPOGORCELL - MODE GELAP LEBIH TERANG + GLASS ===== */
 [data-theme="dark"] .navbar-brand h1{
   background: linear-gradient(135deg, #6ED3C9, #4DB6AC, #B2DFDB)!important;
@@ -1167,7 +1033,155 @@ html:not([data-theme="dark"]) #productGrid .product-card{
   box-shadow: 0 10px 28px rgba(0,77,64,0.15), 0 4px 10px rgba(0,77,64,0.12) !important;
   border: none !important;
 }
+/* JUDUL KATEGORI - BACKGROUND HIJAU TEMA RAPI */
+#productGrid .category-label{
+  background: linear-gradient(135deg, #004D40 0%, #00695C 100%) !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 16px !important;
+  margin: 20px 0 14px 0 !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(0,77,64,0.18) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  grid-column: 1 / -1 !important;
+  width: fit-content !important;
+  min-width: 120px !important;
+}
+#productGrid .category-label::before{
+  display: none !important;
+}
+#productGrid .category-label .cat-logo{
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 7px !important;
+  background-color: #ffffff !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+[data-theme="dark"] #productGrid .category-label{
+  background: linear-gradient(135deg, #0f2a26 0%, #1a4d42 100%) !important;
+  color: #b2dfdb !important;
+  border: 1px solid #2a5a4e !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+[data-theme="dark"] #productGrid .category-label .cat-logo{
+  background-color: #ffffff !important;
+}
+/* BINGKAI FULL HIJAU */
+#productGrid .product-card .card-icon.custom-logo{
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-radius: 11px !important;
+  background: #18644B !important;
+  border: none !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 12px rgba(24,100,75,0.25) !important;
+}
+#productGrid .product-card .card-icon.custom-logo img{
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  padding: 2px !important;
+  object-fit: contain !important;
+}
+#productGrid .category-label .cat-logo{
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+  background-color: #fff !important;
+  border: none !important;
+}
 
+/* MODE GELAP - FULL HIJAU MENYALA */
+[data-theme="dark"] #productGrid .product-card .card-icon.custom-logo{
+  background: #1E7A5C !important;
+  box-shadow: 0 0 0 1px rgba(38,166,154,0.3) inset, 0 0 16px rgba(38,166,154,0.35), 0 4px 14px rgba(0,0,0,0.4) !important;
+}
+[data-theme="dark"] #productGrid .product-card .card-icon.custom-logo img{
+  background: #fff !important;
+  filter: none !important;
+}
+/* ===== PILL SLIDER - FINAL FIX ANTI PUTIH ===== */
+.slider-scroll{
+  gap:10px!important;
+  padding:6px 2px 16px!important;
+  position:relative!important;
+  -webkit-overflow-scrolling:touch!important;
+  scroll-behavior:smooth!important;
+}
+.slider-scroll::before{
+  content:''!important;
+  position:absolute!important;
+  top:6px!important;
+  left:0!important;
+  width:var(--slide-w,132px)!important;
+  height:42px!important;
+  border-radius:50px!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  transform:translateX(var(--slide-x,0px))!important;
+  transition:transform .52s cubic-bezier(.68,-0.3,.32,1.6)!important;
+  background:#18644B!important;
+  box-shadow:0 4px 12px rgba(0,77,64,.20)!important;
+}
+[data-theme="dark"] .slider-scroll::before{
+  background: var(--gradient-primary)!important;
+  box-shadow:0 6px 20px rgba(38,166,154,.35)!important;
+}
+.slider-item{
+  flex:0 0 132px!important; width:132px!important; min-width:132px!important; max-width:132px!important;
+  height:42px!important; flex-direction:row!important; align-items:center!important; gap:8px!important;
+  padding:0 10px 0 6px!important; border-radius:50px!important; position:relative!important; z-index:1!important;
+  background:#fff!important; border:1px solid #dbe9e3!important;
+  box-shadow:0 1px 4px rgba(0,77,64,.05)!important;
+}
+.slider-item img{ width:30px!important; height:30px!important; min-width:30px!important; border-radius:50%!important; background:#f2faf7!important; padding:4px!important; }
+.slider-item .slider-name{ font-size:12.5px!important; font-weight:500!important; color:var(--text-secondary)!important; max-width:82px!important; white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important; }
+.slider-item.active{ background:transparent!important; border-color:#18644B!important; box-shadow:none!important; }
+.slider-item.active img{ background:#fff!important; }
+.slider-item.active .slider-name{ color:#fff!important; font-weight:600!important; }
+[data-theme="dark"] .slider-item:not(.active){ background:var(--bg-card)!important; border-color:var(--border-color)!important; }
+[data-theme="dark"] .slider-item.active{ background:transparent!important; border-color:#26A69A!important; }
+
+/* Logo polos tetap */
+#productGrid .product-card .card-icon.custom-logo{ background:transparent!important; border:none!important; box-shadow:none!important; width:36px!important; height:36px!important; }
+#productGrid .product-card .card-icon.custom-logo img{ width:36px!important; height:36px!important; border-radius:10px!important; }
+
+/* LABEL JENIS PAKET - HIJAU MENYALA DI MODE GELAP */
+[data-theme="dark"] #productGrid .category-label{
+  background: linear-gradient(135deg, #1E7A5C 0%, #26A69A 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(38,166,154,0.4) !important;
+  box-shadow: 0 0 0 1px rgba(38,166,154,0.2) inset, 0 0 14px rgba(38,166,154,0.30), 0 4px 12px rgba(0,0,0,0.35) !important;
+  text-shadow: 0 0 8px rgba(255,255,255,0.4) !important;
+}
+[data-theme="dark"] #productGrid .category-label .cat-logo{
+  background-color: #fff !important;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.2) !important;
+  border: 1px solid rgba(255,255,255,0.6) !important;
+}
+
+/* Mode terang tetap ijo solid */
+html:not([data-theme="dark"]) #productGrid .category-label{
+  background: linear-gradient(135deg, #004D40 0%, #18644B 100%) !important;
+}
     </style>
 </head>
 <body>
@@ -2319,52 +2333,6 @@ function validateInput(raw, operatorOrGame, isGame) {
     }
 }
 
-// ============================================================
-// VALIDASI ID GAME (VERSI PROFESIONAL)
-// ============================================================
-
-function validateGameId(gameName, id) {
-    const clean = id.trim().replace(/\s/g, '');
-    if (!clean) {
-        return { 
-            valid: false, 
-            message: 'ID tidak boleh kosong. Silakan masukkan ID game Anda.' 
-        };
-    }
-
-    // Pattern validasi per game (tetap ketat, tapi pesan error tidak spesifik)
-    const patterns = {
-        'Mobile Legends': /^\d{4,10}\(\d{4,5}\)$|^\d{8,15}$/,
-        'Free Fire': /^[1-9]\d{7,10}$/,
-        'PUBG Mobile': /^[5-7]\d{8,9}$/,
-        'Call Of Duty Mobile': /^\d{19}$/,
-        'Honor Of Kings': /^\d{11,12}$/,
-        'Genshin Impact': /^7\d{8}$/,
-        'Roblox': /^\d{1,10}$/,
-        'Arena of Valor': /^\d{8,12}$/
-    };
-
-    const pattern = patterns[gameName];
-    if (pattern) {
-        if (pattern.test(clean)) {
-            return { valid: true, clean: clean };
-        }
-        return { 
-            valid: false, 
-            message: `Format ID ${gameName} tidak valid. Pastikan ID yang Anda masukkan benar.` 
-        };
-    }
-
-    // Fallback untuk game lain
-    if (/^[A-Za-z0-9]{5,30}$/.test(clean)) {
-        return { valid: true, clean: clean };
-    }
-    return { 
-        valid: false, 
-        message: '⚠️ Format ID tidak valid. Pastikan ID yang Anda masukkan benar.' 
-    };
-}
-
         // ============================================================
         // STATE UNTUK ORDER
         // ============================================================
@@ -2889,110 +2857,50 @@ function renderGrid() {
     window._gridTimer = setTimeout(() => renderGrid(), 100);
     return;
   }
-            if (!selectedKey) {
-                grid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-hand-pointer"></i>
-                            <h3>Pilih ${currentTab === 'internet' ? 'operator' : 'game'} di atas</h3>
-                            <p>Klik salah satu gambar untuk melihat daftar harga.</p>
-                        </div>
-                    `;
-                return;
-            }
-            isRendering = true;
-            const items = getFilteredItems(currentTab, selectedKey, selectedCategory, searchQuery);
-            grid.classList.add('fade');
-            setTimeout(() => {
-                if (items.length === 0) {
-                    grid.innerHTML = `
-                            <div class="empty-state">
-                                <i class="fas fa-inbox"></i>
-                                <h3>Tidak ada produk</h3>
-                                <p>Untuk ${selectedKey} ${selectedCategory ? 'kategori ' + selectedCategory : ''} saat ini belum tersedia.</p>
-                            </div>
-                        `;
-                } else {
-                    let grouped = {};
-                    if (currentTab === 'internet') {
-                        items.forEach(item => {
-                            const cat = item.kategori || 'Lainnya';
-                            if (!grouped[cat]) grouped[cat] = [];
-                            grouped[cat].push(item);
-                        });
-                    } else {
-                        grouped['Semua'] = items;
-                    }
-                    let html = '';
-                    for (const cat in grouped) {
-                        const catItems = grouped[cat];
-                        html += `<div class="category-label">${cat}</div>`;
-                        catItems.forEach((item, index) => {
-                            const badgeHtml = item.populer ? `<span class="badge">POPULER</span>` :
-                                item.promo ? `<span class="badge promo">PROMO</span>` :
-                                item.rekomend ? `<span class="badge rekomend">REKOMENDASI</span>` :
-                                item.hot ? `<span class="badge hot">HOT</span>` :
-                                item.gangguan ? `<span class="badge gangguan">GANGGUAN</span>` :
-                                '';
-                            const oldPriceHtml = item.hargaCoret ?
-                                `<span class="price-old">${formatPrice(item.hargaCoret)}</span>` :
-                                '';
-                            const iconClass = 'gold';
-                            html += `
-                                    <div class="product-card" data-id="${item.nama}" style="animation-delay:${(index * 0.04).toFixed(2)}s">
-                                        ${badgeHtml}
-                                        <div class="card-icon gold">
-                                            <i class="fas ${currentTab === 'internet' ? 'fa-sim-card' : 'fa-gamepad'}"></i>
-                                        </div>
-                                        <div class="card-title">${item.nama}</div>
-                                        <div class="card-sub">${currentTab === 'internet' ? selectedKey : 'Game'}</div>
-                                        <div class="card-meta">
-                                            ${item.kuota ? `<span><i class="fas fa-database"></i> ${item.kuota} GB</span>` : ''}
-                                            <span><i class="fas fa-tag"></i> ${formatPrice(item.harga)}</span>
-                                        </div>
-                                        <div class="card-price-wrap">
-                                            <span class="price">${formatPrice(item.harga)}</span>
-                                            ${oldPriceHtml}
-                                            <div class="action-group">
-                                                <button class="btn-action btn-info" data-id="${item.nama}">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </button>
-                                                <button class="btn-action btn-wa" data-id="${item.nama}">
-                                                    <i class="fab fa-whatsapp"></i> Beli
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-                        });
-                    }
-                    grid.innerHTML = html;
-
-                    grid.querySelectorAll('.btn-wa').forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            const nama = this.dataset.id;
-                            const allItems = getFilteredItems(currentTab, selectedKey, selectedCategory, '');
-                            const product = allItems.find(p => p.nama === nama);
-                            if (product) startOrder(product);
-                        });
-                    });
-
-                    grid.querySelectorAll('.btn-info').forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            const nama = this.dataset.id;
-                            const allItems = getFilteredItems(currentTab, selectedKey, selectedCategory, '');
-                            const product = allItems.find(p => p.nama === nama);
-                            if (product) openInfoModal(product);
-                        });
-                    });
-                }
-                setTimeout(() => {
-                    grid.classList.remove('fade');
-                    isRendering = false;
-                }, 250);
-            }, 200);
-        }
+  if (!selectedKey) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-hand-pointer"></i>
+        <h3>Pilih ${currentTab === 'internet' ? 'operator' : 'game'} di atas</h3>
+        <p>Klik salah satu gambar untuk melihat daftar harga.</p>
+      </div>
+    `;
+    return;
+  }
+  isRendering = true;
+  const items = getFilteredItems(currentTab, selectedKey, selectedCategory, searchQuery);
+  const logoUrl = IMAGES[selectedKey] || '';
+  grid.classList.add('fade');
+  setTimeout(() => {
+    if (items.length === 0) {
+      grid.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><h3>Tidak ada produk</h3><p>Untuk ${selectedKey} ${selectedCategory ? 'kategori ' + selectedCategory : ''} saat ini belum tersedia.</p></div>`;
+    } else {
+      let grouped = {};
+      if (currentTab === 'internet') {
+        items.forEach(item => {
+          const cat = item.kategori || 'Lainnya';
+          if (!grouped[cat]) grouped[cat] = [];
+          grouped[cat].push(item);
+        });
+      } else {
+        grouped['Semua'] = items;
+      }
+      let html = '';
+      for (const cat in grouped) {
+        html += `<div class="category-label"><span class="cat-logo" style="background-image:url('${logoUrl}')"></span>${cat}</div>`;
+        grouped[cat].forEach((item, index) => {
+          const badgeHtml = item.populer ? `<span class="badge">POPULER</span>` : item.promo ? `<span class="badge promo">PROMO</span>` : item.rekomend ? `<span class="badge rekomend">REKOMENDASI</span>` : item.hot ? `<span class="badge hot">HOT</span>` : item.gangguan ? `<span class="badge gangguan">GANGGUAN</span>` : '';
+          const oldPriceHtml = item.hargaCoret ? `<span class="price-old">${formatPrice(item.hargaCoret)}</span>` : '';
+          html += `<div class="product-card" style="animation-delay:${(index*0.04).toFixed(2)}s">${badgeHtml}<div class="card-icon custom-logo"><img src="${logoUrl}" alt="${selectedKey}" loading="lazy" onerror="this.parentNode.innerHTML='<i class=\\'fas fa-sim-card\\'></i>'"></div><div class="card-title">${item.nama}</div><div class="card-sub">${selectedKey}</div><div class="card-meta">${item.kuota ? `<span><i class="fas fa-database"></i> ${item.kuota} GB</span>` : ''}<span><i class="fas fa-tag"></i> ${formatPrice(item.harga)}</span></div><div class="card-price-wrap"><span class="price">${formatPrice(item.harga)}</span>${oldPriceHtml}<div class="action-group"><button class="btn-action btn-info" data-id="${item.nama}"><i class="fas fa-info-circle"></i></button><button class="btn-action btn-wa" data-id="${item.nama}"><i class="fab fa-whatsapp"></i> Beli</button></div></div></div>`;
+        });
+      }
+      grid.innerHTML = html;
+      grid.querySelectorAll('.btn-wa').forEach(btn => btn.addEventListener('click', function(e){ e.stopPropagation(); const p = getFilteredItems(currentTab, selectedKey, selectedCategory, '').find(x=>x.nama===this.dataset.id); if(p) startOrder(p); }));
+      grid.querySelectorAll('.btn-info').forEach(btn => btn.addEventListener('click', function(e){ e.stopPropagation(); const p = getFilteredItems(currentTab, selectedKey, selectedCategory, '').find(x=>x.nama===this.dataset.id); if(p) openInfoModal(p); }));
+    }
+    setTimeout(()=>{ grid.classList.remove('fade'); isRendering=false; },250);
+  },200);
+}
 
         async function loadData(tab) {
             if (allData[tab]) return;
