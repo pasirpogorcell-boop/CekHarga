@@ -1135,6 +1135,27 @@ html:not([data-theme="dark"]) .product-card:active {
   display:none;
   z-index:2;
 }
+/* FIX TABS DOANG - BIAR NGGAK NUMPUK DI HP KECIL */
+.tabs{
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  gap: 8px !important;
+  justify-content: center !important;
+}
+.tab-btn{
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: 50% !important;
+  padding: 12px 10px !important;
+  font-size: 14px !important;
+  white-space: nowrap !important;
+}
+.tabs::after{
+  width: calc(50% - 4px) !important;
+}
     </style>
 </head>
 <body>
@@ -3190,7 +3211,7 @@ function renderGrid() {
 })();
 
 // Versi halus di atas
-const WEB_VER = "v5.0.0";
+const WEB_VER = "v5.1.0";
 const elVer = document.getElementById('webVersionTop');
 if(elVer) elVer.textContent = WEB_VER;
 
