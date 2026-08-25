@@ -2099,41 +2099,96 @@ function validateGameId(gameName, id) {
 }
 
 // ============================================================
-// FUNGSI VALIDASI UTAMA (GANTI YANG LAMA)
+// FUNGSI VALIDASI UTAMA (VERSI PROFESIONAL)
 // ============================================================
 
 function validateInput(raw, operatorOrGame, isGame) {
-    if (!raw.trim()) {
-        return { valid: false, message: '❌ Data tidak boleh kosong!' };
+    if (!raw || !raw.trim()) {
+        return { 
+            valid: false, 
+            message: 'Data tidak boleh kosong. Silakan isi dengan benar.' 
+        };
     }
+
+    const clean = raw.replace(/[\s\-()]/g, '');
 
     if (isGame) {
         // Validasi ID Game
         return validateGameId(operatorOrGame, raw);
     } else {
-        // Validasi Nomor HP dengan prefix operator spesifik
-        const clean = raw.replace(/[\s\-()]/g, '');
+        // Validasi Nomor HP
         if (!/^\d+$/.test(clean)) {
-            return { valid: false, message: '❌ Nomor HP hanya boleh berisi angka!' };
+            return { 
+                valid: false, 
+                message: 'Format nomor tidak sesuai. Pastikan hanya menggunakan angka.' 
+            };
         }
         if (clean.length < 10 || clean.length > 13) {
-            return { valid: false, message: '❌ Nomor HP harus 10-13 digit!' };
+            return { 
+                valid: false, 
+                message: 'Nomor yang Anda masukkan tidak valid. Periksa kembali nomor Anda.' 
+            };
         }
 
         // Cek prefix sesuai operator yang dipilih
         const prefixes = PREFIX_PER_OPERATOR[operatorOrGame] || [];
-        if (prefixes.length === 0) {
-            // Jika operator tidak terdaftar, gunakan validasi umum
-            return { valid: true, clean: clean };
-        }
-
-        const isValidPrefix = prefixes.some(p => clean.startsWith(p));
-        if (!isValidPrefix) {
-            const prefixList = prefixes.join(', ');
-            return { valid: false, message: `❌ Nomor harus diawali ${prefixList} (${operatorOrGame})` };
+        if (prefixes.length > 0) {
+            const isValidPrefix = prefixes.some(p => clean.startsWith(p));
+            if (!isValidPrefix) {
+                return { 
+                    valid: false, 
+                    message: `Nomor yang Anda masukkan tidak sesuai dengan operator ${operatorOrGame}. Pastikan Anda memilih operator yang benar.` 
+                };
+            }
         }
         return { valid: true, clean: clean };
     }
+}
+
+// ============================================================
+// VALIDASI ID GAME (VERSI PROFESIONAL)
+// ============================================================
+
+function validateGameId(gameName, id) {
+    const clean = id.trim().replace(/\s/g, '');
+    if (!clean) {
+        return { 
+            valid: false, 
+            message: 'ID tidak boleh kosong. Silakan masukkan ID game Anda.' 
+        };
+    }
+
+    // Pattern validasi per game (tetap ketat, tapi pesan error tidak spesifik)
+    const patterns = {
+        'Mobile Legends': /^\d{4,10}\(\d{4,5}\)$|^\d{8,15}$/,
+        'Free Fire': /^[1-9]\d{7,10}$/,
+        'PUBG Mobile': /^[5-7]\d{8,9}$/,
+        'Call Of Duty Mobile': /^\d{19}$/,
+        'Honor Of Kings': /^\d{11,12}$/,
+        'Genshin Impact': /^7\d{8}$/,
+        'Roblox': /^\d{1,10}$/,
+        'Arena of Valor': /^\d{8,12}$/
+    };
+
+    const pattern = patterns[gameName];
+    if (pattern) {
+        if (pattern.test(clean)) {
+            return { valid: true, clean: clean };
+        }
+        return { 
+            valid: false, 
+            message: `Format ID ${gameName} tidak valid. Pastikan ID yang Anda masukkan benar.` 
+        };
+    }
+
+    // Fallback untuk game lain
+    if (/^[A-Za-z0-9]{5,30}$/.test(clean)) {
+        return { valid: true, clean: clean };
+    }
+    return { 
+        valid: false, 
+        message: '⚠️ Format ID tidak valid. Pastikan ID yang Anda masukkan benar.' 
+    };
 }
 
         // ============================================================
