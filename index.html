@@ -1038,7 +1038,103 @@ html:not([data-theme="dark"]) .product-card:active {
   filter: brightness(1.05) drop-shadow(0 0 10px rgba(38,166,154,.30))!important;
   text-shadow: none!important;
 }
+/* ===== LOGO WARUNG KEDIP PELAN ===== */
+.navbar-brand .logo-icon{
+  animation: slowBlink 2.8s ease-in-out infinite!important;
+}
 
+@keyframes slowBlink{
+  0%,100%{ 
+    opacity:1; 
+    transform: scale(1);
+    box-shadow: 0 4px 14px rgba(0,80,60,0.35);
+  }
+  50%{ 
+    opacity:0.45; 
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0,80,60,0.15);
+  }
+}
+
+/* Kalau mau iconnya aja yang kedip, bukan kotaknya, pakai ini: */
+/*
+.navbar-brand .logo-icon i{
+  animation: slowBlinkIcon 2.8s ease-in-out infinite!important;
+}
+@keyframes slowBlinkIcon{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0.2; }
+}
+*/
+.navbar-brand .logo-link{
+  text-decoration:none!important;
+  display:flex!important;
+}
+.navbar-brand h1{
+  cursor:default!important;
+  pointer-events:none!important;
+}
+/* ===== ICON PAKET - IKUT TEMA IJO, BUKAN KUNING ===== */
+.product-card .card-icon,
+.product-card .card-icon.gold,
+.product-card .card-icon.green,
+.product-card .card-icon.warm{
+  background: var(--gradient-primary)!important;
+  color:#fff!important;
+}
+
+[data-theme="dark"] .product-card .card-icon,
+[data-theme="dark"] .product-card .card-icon.gold,
+[data-theme="dark"] .product-card .card-icon.green,
+[data-theme="dark"] .product-card .card-icon.warm{
+  background: linear-gradient(135deg, #26A69A, #00695C)!important;
+  color:#fff!important;
+  box-shadow: 0 4px 14px rgba(38,166,154,0.35)!important;
+}
+/* ===== LOGO WARUNG DI INFO TOKO - IKUT TEMA ===== */
+#settingsModalOverlay .modal-icon,
+#settingsGrid .settings-item.full:first-child{
+  background: var(--gradient-primary)!important;
+  color:#fff!important;
+}
+
+[data-theme="dark"] #settingsModalOverlay .modal-icon,
+[data-theme="dark"] #settingsGrid .settings-item.full:first-child{
+  background: linear-gradient(135deg, #26A69A, #00695C)!important;
+  box-shadow: 0 4px 14px rgba(38,166,154,0.35)!important;
+}
+
+#settingsModalOverlay .modal-icon i,
+#settingsGrid .settings-item.full:first-child i{
+  color:#fff!important;
+}
+/* ===== X HALUS TANPA NGERUBAH TAMPILAN - PAKAI NATIVE CLEAR ===== */
+#searchInput::-webkit-search-cancel-button,
+#inputField::-webkit-search-cancel-button{
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+#searchInput::-ms-clear,
+#inputField::-ms-clear{ display:none; }
+
+/* Tombol X cuma muncul pas ada isi, numpang di dalam */
+.search-wrap, .input-modal-box{ position:relative; }
+.search-wrap::after, .input-modal-box .field-wrap::after{ content:none; }
+
+.clear-native{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  background:transparent;
+  border:none;
+  color:var(--text-muted);
+  font-size:14px;
+  cursor:pointer;
+  display:none;
+  z-index:2;
+}
     </style>
 </head>
 <body>
@@ -1049,10 +1145,14 @@ html:not([data-theme="dark"]) .product-card:active {
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="https://pasirpogorcell-boop.github.io/Daftar-barang/" class="navbar-brand">
-                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
-                <h1>PasirPogorCell</h1>
-            </a>
+<div class="navbar-brand">
+    <a href="https://pasirpogorcell-boop.github.io/Daftar-barang/" class="logo-link" aria-label="Kembali ke Daftar Barang">
+      <div class="logo-icon">
+        <i class="fa-solid fa-store"></i>
+      </div>
+    </a>
+    <h1>PasirPogorCell</h1>
+</div>
             <div class="navbar-actions">
                 <button id="settingsToggle" aria-label="Pengaturan Toko">
                     <i class="fas fa-sliders-h"></i>
@@ -1144,7 +1244,7 @@ html:not([data-theme="dark"]) .product-card:active {
     <!-- ===== MODAL SETTINGS ===== -->
     <div class="modal-overlay" id="settingsModalOverlay">
         <div class="modal-box">
-            <div class="modal-icon" style="background: var(--gradient-gold);"><i class="fas fa-store-alt"></i></div>
+            <div class="modal-icon" style="background: var(--gradient-primary);"><i class="fas fa-store"></i></div>
             <h3>Informasi Toko</h3>
             <p class="modal-sub" style="margin-bottom: 16px;">Detail lengkap PasirPogorCell</p>
 <div class="settings-grid" id="settingsGrid">
@@ -1235,7 +1335,12 @@ html:not([data-theme="dark"]) .product-card:active {
             <div class="input-product-name" id="inputProductName">Nama Produk</div>
             <div class="input-product-detail" id="inputProductDetail">Detail produk</div>
             <label for="inputField" id="inputLabel">Masukkan nomor telepon</label>
-            <input type="text" id="inputField" placeholder="Contoh: 08123456789" />
+            <div style="position:relative;">
+  <input type="text" id="inputField" placeholder="Masukkan nomor HP" style="padding-right:42px;" />
+  <button type="button" id="clearInputField" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;border-radius:50%;background:var(--bg-primary);color:var(--text-muted);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:14px;">
+    <i class="fas fa-times"></i>
+  </button>
+</div>
             <div style="font-size:12px; color:var(--text-muted); margin-top:4px;" id="inputHelper">Pastikan nomor aktif dan sesuai dengan operator.</div>
             <div class="input-actions">
                 <button class="btn-cancel-input" id="inputCancelBtn">Batal</button>
@@ -2263,20 +2368,31 @@ function startOrder(product) {
     productName.textContent = product.nama;
     productDetail.textContent = `${selectedKey} | ${formatPrice(product.harga)}`;
 
+    // ===== AMBIL NOMOR TERAKHIR DARI PENYIMPANAN =====
+    const savedPhone = localStorage.getItem('ppc_last_phone') || '';
+    const savedGame = localStorage.getItem('ppc_last_gameId') || '';
+
     if (isGame) {
         label.textContent = 'Masukkan ID Game / User ID';
-        field.placeholder = 'Contoh: 123456789';
+        field.placeholder = 'Masukkan User ID';
         helper.textContent = 'Pastikan ID game yang dimasukkan benar dan sesuai format.';
+        field.value = savedGame; // <-- otomatis keisi
     } else {
         label.textContent = 'Masukkan nomor telepon tujuan';
-        field.placeholder = 'Contoh: 08123456789';
+        field.placeholder = 'Masukkan nomor HP';
         helper.textContent = `Pastikan nomor aktif dan diawali prefix ${selectedKey} yang sesuai.`;
+        field.value = savedPhone; // <-- otomatis keisi
     }
-    field.value = '';
+
     field.style.borderColor = 'var(--border-color)';
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => field.focus(), 100);
+    
+    // Kalau sudah ada isinya, langsung seleksi semua biar gampang ganti
+    setTimeout(() => {
+      field.focus();
+      if(field.value) field.select();
+    }, 100);
 }
 
 // ============================================================
@@ -2302,6 +2418,12 @@ document.getElementById('inputSubmitBtn').addEventListener('click', function() {
     field.style.borderColor = 'var(--border-color)';
     const customerId = result.clean || raw;
     currentOrder.customerId = customerId;
+        // ===== SIMPAN OTOMATIS =====
+    if(currentOrder.isGame){
+      localStorage.setItem('ppc_last_gameId', customerId);
+    }else{
+      localStorage.setItem('ppc_last_phone', customerId);
+    }
 
     // CEK VOUCHER (jika ada fungsi voucher)
     // const discount = applyVoucher(customerId, currentOrder.isGame);
@@ -3016,6 +3138,53 @@ function renderGrid() {
         });
 
         scrollTopBtn2.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // ===== AUTO-SAVE + TOMBOL X OTOMATIS HILANG MUNCUL =====
+(function(){
+  const sInput = document.getElementById('searchInput');
+  const pInput = document.getElementById('inputField');
+
+  // Buat tombol X via JS biar HTML nggak berantakan
+  function makeX(input, parent){
+    const btn = document.createElement('button');
+    btn.innerHTML = '<i class="fas fa-times"></i>';
+    btn.type = 'button';
+    btn.className = 'clear-native';
+    btn.style.display = 'none';
+    parent.style.position = 'relative';
+    parent.appendChild(btn);
+    
+    function toggle(){ btn.style.display = input.value ? 'block' : 'none'; }
+    input.addEventListener('input', toggle);
+    input.addEventListener('keyup', toggle);
+    setInterval(toggle, 400);
+
+    btn.addEventListener('click', ()=>{
+      input.value = '';
+      toggle();
+      input.dispatchEvent(new Event('input'));
+      if(input === sInput){
+        searchQuery = '';
+        localStorage.removeItem('ppc_search');
+        renderGrid();
+      }else{
+        if(currentOrder.isGame) localStorage.removeItem('ppc_last_gameId');
+        else localStorage.removeItem('ppc_last_phone');
+      }
+      input.focus();
+    });
+    return btn;
+  }
+
+  makeX(sInput, document.querySelector('.search-wrap'));
+  
+  // untuk input modal, bungkus dulu
+  const wrap = document.createElement('div');
+  wrap.style.position = 'relative';
+  pInput.parentNode.insertBefore(wrap, pInput);
+  wrap.appendChild(pInput);
+  makeX(pInput, wrap);
+})();
 
         // ============================================================
         // INIT
