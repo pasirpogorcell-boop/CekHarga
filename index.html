@@ -1006,6 +1006,39 @@ html:not([data-theme="dark"]) .product-card:active {
 .slider-item.active.slider-name{ color:#fff!important; font-weight:600!important; }
 [data-theme="dark"].slider-item:not(.active){ background:var(--bg-card)!important; }
 [data-theme="dark"].slider-scroll::before{ background:var(--primary-light)!important; }
+/* ===== LOGO PASIRPOGORCELL - MODE GELAP LEBIH TERANG + GLASS ===== */
+[data-theme="dark"] .navbar-brand h1{
+  background: linear-gradient(135deg, #6ED3C9, #4DB6AC, #B2DFDB)!important;
+  -webkit-background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  filter: brightness(1.2) drop-shadow(0 0 12px rgba(77,182,172,.35))!important;
+  letter-spacing: -0.3px!important;
+}
+
+[data-theme="dark"] .navbar-brand .logo-icon{
+  background: rgba(77,182,172,0.18)!important;
+  backdrop-filter: blur(12px) saturate(180%)!important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%)!important;
+  border: 1px solid rgba(77,182,172,0.35)!important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 4px 20px rgba(77,182,172,0.25), 0 0 30px rgba(77,182,172,0.15)!important;
+  color: #80CBC4!important;
+}
+
+[data-theme="dark"] .navbar{
+  background: rgba(22,43,36,0.75)!important;
+  backdrop-filter: blur(20px) saturate(180%)!important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%)!important;
+  border-bottom: 1px solid rgba(77,182,172,0.12)!important;
+}
+/* ===== JUDUL HERO - AGAK GELAP DIKIT DARI YANG TADI ===== */
+[data-theme="dark"] .hero h2{
+  background: linear-gradient(135deg, #4DB6AC, #26A69A, #00897B)!important;
+  -webkit-background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  filter: brightness(1.05) drop-shadow(0 0 10px rgba(38,166,154,.30))!important;
+  text-shadow: none!important;
+}
+
     </style>
 </head>
 <body>
