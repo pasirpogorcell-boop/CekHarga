@@ -1427,9 +1427,9 @@ html:not([data-theme="dark"]) #productGrid .category-label{
 
             <div id="qrContainer" style="display:none;">
                 <div class="qr-container">
-                    <img src="https://raw.githubusercontent.com/adenaskolani5-jpg/PasirPogorCell/1eb3d5fd0ce82f3e05fb36249765cdbb38722f05/QRIS.png"
-                         alt="QRIS Code" loading="lazy" id="qrImage"
-                         onerror="this.style.display='none'; document.getElementById('qrFallback').style.display='block';">
+<img src="https://i.postimg.cc/qMPm0BK2/qr-ID1026576912368-06-09-26-1788691047-1788691047506.jpg"
+     alt="QRIS Code" loading="lazy" id="qrImage"
+     onerror="this.style.display='none'; document.getElementById('qrFallback').style.display='block';">
                     <div id="qrFallback" style="display:none; color:var(--text-muted); font-size:13px; padding:12px;">
                         ⚠️ Gagal memuat QRIS. Silahkan minta QRIS ke admin via chat.
                     </div>
@@ -2735,56 +2735,62 @@ document.getElementById('inputSubmitBtn').addEventListener('click', function() {
             }
         });
 
-        // ============================================================
-        // QRIS FULLSCREEN & DOWNLOAD
-        // ============================================================
+// ===== QRIS FULLSCREEN & DOWNLOAD - SIMPLE =====
+const QR_URL_DEFAULT = 'https://i.postimg.cc/qMPm0BK2/qr-ID1026576912368-06-09-26-1788691047-1788691047506.jpg';
 
-        function toggleFullscreenQR() {
-            const overlay = document.getElementById('qrFullscreenOverlay');
-            const img = document.getElementById('qrFullscreenImg');
-            const sourceImg = document.getElementById('qrImage');
-            if (!sourceImg) {
-                showToast('⚠️ Gambar QR tidak tersedia', 'error');
-                return;
-            }
-            const src = sourceImg.src || 'https://raw.githubusercontent.com/adenaskolani5-jpg/PasirPogorCell/1eb3d5fd0ce82f3e05fb36249765cdbb38722f05/QRIS.png';
-            img.src = src;
-            overlay.classList.toggle('active');
-            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
-        }
+function toggleFullscreenQR() {
+    const overlay = document.getElementById('qrFullscreenOverlay');
+    const fullImg = document.getElementById('qrFullscreenImg');
+    const smallImg = document.getElementById('qrImage');
+    const src = smallImg && smallImg.src ? smallImg.src : QR_URL_DEFAULT;
+    fullImg.src = src;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
-        document.getElementById('qrFullscreenClose').addEventListener('click', function() {
-            document.getElementById('qrFullscreenOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('qrCloseBtn').addEventListener('click', function() {
-            document.getElementById('qrFullscreenOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('qrFullscreenOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
+function closeFullscreenQR() {
+    document.getElementById('qrFullscreenOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
 
-        function downloadQR() {
-            const img = document.getElementById('qrFullscreenImg');
-            if (!img || !img.src) {
-                showToast('⚠️ Tidak ada gambar QR untuk diunduh', 'error');
-                return;
-            }
-            const link = document.createElement('a');
-            link.download = 'QRIS_PasirPogorCell.png';
-            link.href = img.src;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showToast('📥 QR Code sedang diunduh...', 'success');
-        }
+async function downloadQR() {
+    const smallImg = document.getElementById('qrImage');
+    const fullImg = document.getElementById('qrFullscreenImg');
+    let url = '';
 
-        document.getElementById('qrDownloadBtn').addEventListener('click', downloadQR);
+    if (document.getElementById('qrFullscreenOverlay').classList.contains('active') && fullImg.src) {
+        url = fullImg.src;
+    } else if (smallImg && smallImg.src) {
+        url = smallImg.src;
+    } else {
+        url = QR_URL_DEFAULT;
+    }
 
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = 'QRIS_PasirPogorCell.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+        
+        showToast('Download selesai', 'success');
+    } catch (e) {
+        window.open(url, '_blank');
+    }
+}
+
+document.getElementById('qrFullscreenClose').addEventListener('click', closeFullscreenQR);
+document.getElementById('qrCloseBtn').addEventListener('click', closeFullscreenQR);
+document.getElementById('qrDownloadBtn').addEventListener('click', downloadQR);
+document.getElementById('qrFullscreenOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeFullscreenQR();
+});
         // ============================================================
         // TOMBOL TUTUP MODAL PEMBAYARAN
         // ============================================================
