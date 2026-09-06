@@ -1403,9 +1403,12 @@ html:not([data-theme="dark"]) #productGrid .category-label{
 
     <!-- ===== MODAL PEMBAYARAN ===== -->
     <div class="modal-overlay" id="paymentModalOverlay">
-        <div class="modal-box payment-modal-box">
-            <div class="modal-icon" style="background: var(--gradient-gold);"><i class="fas fa-wallet"></i></div>
-            <h3>💳 Pilih Metode Pembayaran</h3>
+<div class="modal-box payment-modal-box" style="position: relative;">
+    <button id="paymentCloseX" style="position:absolute; top:16px; right:16px; width:36px; height:36px; border:none; border-radius:50%; background:var(--bg-primary); color:var(--text-muted); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: all 0.2s;">
+        <i class="fas fa-times"></i>
+    </button>
+    <div class="modal-icon" style="background: var(--gradient-gold);"><i class="fas fa-wallet"></i></div>
+    <h3>💳 Pilih Metode Pembayaran</h3>
             <p class="modal-sub">Pilih cara pembayaran yang Anda inginkan.</p>
 
             <div class="payment-summary" id="paymentSummary">
@@ -3339,6 +3342,12 @@ if(elVer) elVer.textContent = WEB_VER;
         }
 
         init();
+        
+        // TOMBOL X MODAL PEMBAYARAN
+document.getElementById('paymentCloseX').addEventListener('click', function() {
+    document.getElementById('paymentModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+});
     </script>
 </body>
 </html>
